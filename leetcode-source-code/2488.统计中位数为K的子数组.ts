@@ -26,8 +26,8 @@ function countSubarrays(nums: number[], k: number): number {
     }
   }
 
-  console.log(recordCounts);
-  console.log(prefixSum);
+  // console.log(recordCounts);
+  // console.log(prefixSum);
 
   for (let i = kIndex + 1; i < numsLength + 1; i++) {
     ans += (recordCounts.get(prefixSum[i]) || 0);

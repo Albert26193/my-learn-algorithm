@@ -20,7 +20,7 @@ class Solution {
             // 如果这个点被遍历过，那么就需要放弃
             // 遍历到最远的叶子节点，就不可能往回走，因此，最后一条DFS路径，就是最长的一条路径
             if (depth[nextPoint] > -1) {
-                continue ;
+                continue;
             }
 
             depth[nextPoint] = depth[curPoint] + 1;
@@ -29,7 +29,7 @@ class Solution {
             dfs(nextPoint, fa, adj, depth);
         }
     }
-    
+
     int findLongestPoint(int startPoint, vector<vector<int>>& adj, vector<int>& fa) {
         // LC::PrintVector(fa);
         int nodeCount = adj.size();

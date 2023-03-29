@@ -13,3 +13,4 @@ function multiply(num1: string, num2: string): string {
 
 
 
+console.log(multiply("2", "3"));
