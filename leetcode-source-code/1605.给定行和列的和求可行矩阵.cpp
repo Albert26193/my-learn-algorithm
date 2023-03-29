@@ -6,7 +6,7 @@
 
 #include <bits/stdc++.h>
 
-#include "../headers/lc-all-header.h"
+#include "../cpp_headers/lc_headers.h"
 using namespace std;
 
 // @lc code=start
@@ -20,7 +20,7 @@ class Solution {
             return {{}};
         }
 
-        vector<vector<int>> resultMatrix(rowCount, vector<int> (colCount, -1));
+        vector<vector<int>> resultMatrix(rowCount, vector<int>(colCount, -1));
 
         for (int x = 0; x < rowCount; x++) {
             for (int y = 0; y < colCount; y++) {
@@ -41,6 +41,6 @@ int main() {
     vector<int> colSum = {4, 7};
 
     lcPrintMatrix(s.restoreMatrix(rowSum, colSum));
-    
+
     return 0;
 }

@@ -1,10 +1,11 @@
 #include <bits/stdc++.h>
-#include "../headers/lc-all-header.h"
+
+#include "../cpp_headers/lc_headers.h"
 
 using namespace std;
 
 class Solution {
-public:
+   public:
     void dfs(vector<vector<int>>& adj, int currNode, vector<int>& fa, vector<int>& depth) {
         for (int i = 0, len = adj[currNode].size(); i < len; i++) {
             int nextNode = adj[currNode][i];

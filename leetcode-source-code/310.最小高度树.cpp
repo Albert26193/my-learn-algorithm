@@ -6,7 +6,7 @@
 
 #include <bits/stdc++.h>
 
-#include "../headers/lc-all-header.h"
+#include "../cpp_headers/lc_headers.h"
 
 using namespace std;
 
@@ -51,8 +51,8 @@ class Solution {
     }
 
     vector<int> findMinHeightTrees(int n, vector<vector<int>>& edges) {
-        if (n == 1) {
-            return {0};
+        if (n == 2) {
+            return {1};
         }
         int randomPoint = rand() % n;
         vector<vector<int>> adj(n, vector<int>(0));

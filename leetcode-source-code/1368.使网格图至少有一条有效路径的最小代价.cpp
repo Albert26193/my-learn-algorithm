@@ -5,7 +5,7 @@
  */
 #include <bits/stdc++.h>
 
-#include "../headers/lc-all-header.h"
+#include "../cpp_headers/lc_headers.h"
 
 using namespace std;
 
@@ -68,7 +68,6 @@ class Solution {
 
                 dist[nextX][nextY] = dist[curX][curY] + cost;
             }
-
         }
 
         return dist[rowCount - 1][colCount - 1];

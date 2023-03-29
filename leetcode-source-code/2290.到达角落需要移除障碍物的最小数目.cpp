@@ -6,7 +6,7 @@
 
 #include <bits/stdc++.h>
 
-#include "../headers/lc-all-header.h"
+#include "../cpp_headers/lc_headers.h"
 using namespace std;
 
 // @lc code=start
@@ -62,7 +62,7 @@ class Solution {
 
                 if (nextVal == 0) {
                     positionQueue.push_front({nextX, nextY});
-                } else if (nextVal == 1){
+                } else if (nextVal == 1) {
                     positionQueue.push_back({nextX, nextY});
                 } else {
                     return -1;

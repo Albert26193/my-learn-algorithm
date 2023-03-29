@@ -1,6 +1,8 @@
 #include <iostream>
 
-#include "../cpp_headers/lc_headers.h"
+#include
+    "../cpp_headers/lc_headers.h"
+    "
 
 using namespace std;
 
@@ -25,9 +27,9 @@ int main() {
     unordered_map<int, int> ump = {{1, 5}};
     printIterable(ump);
     std::vector<std::vector<int>> matrix = {
-    {1, 2, 3},
-    {4, 5, 6}
-};
+        {1, 2, 3},
+        {4, 5, 6}};
+
     printIterable(matrix);
     return 0;
 }

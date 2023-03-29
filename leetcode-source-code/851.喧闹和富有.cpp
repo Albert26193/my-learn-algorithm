@@ -6,7 +6,7 @@
 
 #include <bits/stdc++.h>
 
-#include "../headers/lc-all-header.h"
+#include "../cpp_headers/lc_headers.h"
 using namespace std;
 
 // @lc code=start
@@ -44,7 +44,7 @@ class Solution {
                 }
                 if (inDegree[nextPerson] == 0) {
                     personQueue.push(nextPerson);
-                } 
+                }
             }
         }
 
