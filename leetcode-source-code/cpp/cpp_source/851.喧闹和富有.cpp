@@ -52,6 +52,7 @@ class Solution {
     }
 };
 // @lc code=end
+
 int main() {
     Solution s;
     vector<vector<int>> richer = {
@@ -64,6 +65,7 @@ int main() {
         {6, 3},
     };
     vector<int> quiet = {3, 2, 5, 4, 6, 1, 7, 0};
-    s.loudAndRich(richer, quiet);
+    vector<int> ans = s.loudAndRich(richer, quiet);
+    printIterable(ans);
     return 0;
 }
