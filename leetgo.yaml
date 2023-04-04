@@ -1,0 +1,18 @@
+# leetgo project level config, global config is at /Users/albert/.config/leetgo/config.yaml
+# for more details, please refer to https://github.com/j178/leetgo
+language: zh
+code:
+  lang: go
+  # custom dir
+  go:
+    out_dir: leetcode-source-code/go
+  typescript:
+    out_dir: leetcode-source-code/ts
+  cpp:
+    out_dir: leetcode-source-code/cpp
+leetcode:
+  site: https://leetcode.cn
+#  credentials:
+#    from: browser
+#editor:
+#  use: none
