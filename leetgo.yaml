@@ -5,11 +5,11 @@ code:
   lang: go
   # custom dir
   go:
-    out_dir: go
+    out_dir: leetcode/go
   typescript:
-    out_dir: ts
+    out_dir: leetcode/ts
   cpp:
-    out_dir: cpp
+    out_dir: leetcode/cpp
 leetcode:
   site: https://leetcode.cn
 #  credentials:
