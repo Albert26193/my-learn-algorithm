@@ -1,0 +1,16 @@
+target_case: 0
+
+input:
+2
+output:
+"110"
+
+input:
+3
+output:
+"111"
+
+input:
+4
+output:
+"100"
