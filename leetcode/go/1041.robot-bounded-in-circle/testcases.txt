@@ -1,0 +1,16 @@
+target_case: 0
+
+input:
+"GGLLGG"
+output:
+true
+
+input:
+"GG"
+output:
+false
+
+input:
+"GL"
+output:
+true
