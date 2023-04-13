@@ -1,0 +1,16 @@
+target_case: 0
+
+input:
+"QWER"
+output:
+0
+
+input:
+"QQWE"
+output:
+1
+
+input:
+"QQQW"
+output:
+2

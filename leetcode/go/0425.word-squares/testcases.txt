@@ -1,0 +1,11 @@
+target_case: 0
+
+input:
+["area","lead","wall","lady","ball"]
+output:
+[["ball","area","lead","lady"],["wall","area","lead","lady"]]
+
+input:
+["abat","baba","atan","atal"]
+output:
+[["baba","abat","baba","atal"],["baba","abat","baba","atan"]]
