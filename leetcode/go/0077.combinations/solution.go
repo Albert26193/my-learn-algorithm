@@ -13,21 +13,29 @@ import (
 
 // @lc code=begin
 
-func backTrack(n int, k int, depth int, combination *[]int, ans *[][]int) {
-	if depth == (k - 1) {
-		*ans = append(*ans, *combination)
+// level: k
+//  root
+// 0:   1 			2 3 ... n
+// 1:  2 	3...n   	...
+// 2: 3...n ...         ...
+func backTrack(n int, k int, currentIndex int, combination *[]int, ans *[][]int) {
+	if len(*combination) == k {
+		copyCombination := make([]int, k)
+		copy(copyCombination, *combination)
+		*ans = append(*ans, copyCombination)
 		return
 	}
 
-	for i := depth + 1; i <= n; i++ {
+	for i := currentIndex; i <= n; i++ {
 		*combination = append(*combination, i)
-		backTrack(n, k, depth+1, combination, ans)
-		// *combination = (*combination)[:len(*combination)-1]
+		backTrack(n, k, i+1, combination, ans)
+		*combination = (*combination)[:len(*combination)-1]
 	}
 }
 
 func combine(n int, k int) (ans [][]int) {
-	backTrack(n, k, 0, &([]int{}), &ans)
+	combination := make([]int, 0)
+	backTrack(n, k, 1, &combination, &ans)
 	return ans
 }
 
