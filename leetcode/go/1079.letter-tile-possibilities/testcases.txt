@@ -1,0 +1,16 @@
+target_case: 0
+
+input:
+"AAB"
+output:
+8
+
+input:
+"AAABBC"
+output:
+188
+
+input:
+"V"
+output:
+1
