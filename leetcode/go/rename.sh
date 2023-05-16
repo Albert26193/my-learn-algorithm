@@ -1,5 +1,5 @@
 rename_go () {
-    local root_dir="/Users/albert/CodeSpace/learn/my-learn-algorithm/leetcode/go"
+    local root_dir="${HOME}/CodeSpace/my-learn/my-algorithm/leetcode/go"
     for dir in ${root_dir}/*/; do
         local dirname="$(basename ${dir})"
         local solution_file="${dir}solution.go"
