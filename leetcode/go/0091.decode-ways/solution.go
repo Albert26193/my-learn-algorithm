@@ -10,51 +10,25 @@ import (
 	. "github.com/j178/leetgo/testutils/go"
 )
 
-//TODO
+//TODO: 抄的别人题解，有空回头看
 // @lc code=begin
-func stringToNum(subString string) int {
-	if len(subString) == 1 {
-		return int(subString[0] - '0')
-	}
-
-	tenPosition := int(subString[0] - '0')
-	singlePosition := int(subString[1] - '0')
-	res := 10*tenPosition + singlePosition
-	if res < 10 {
-		return 1e5
-	}
-
-	return res
-}
-
-func numDecodings(s string) (ans int) {
+func numDecodings(s string) int {
 	originLength := len(s)
+	s = " " + s
 	dp := make([]int, originLength+5)
-
-	// dp[i]: 字符串的前i位 可以做 dp[i] 种拆解
-	dp[0] = 0
-
-	if s[0] == '0' {
-		dp[1] = 0
-	} else {
-		dp[1] = 1
-	}
-
-	for i := 2; i <= originLength; i += 1 {
-		if stringToNum(s[i-2:i]) <= 26 {
-			dp[i] = dp[i-1] + 1
-		} else {
+	dp[0] = 1
+	for i := 1; i <= originLength; i++ {
+		firstNum := s[i] - '0'
+		secondNum := (s[i-1]-'0')*10 + (s[i] - '0')
+		if 1 <= firstNum && firstNum <= 9 {
 			dp[i] = dp[i-1]
 		}
 
-		if s[i-1] == '0' {
-			dp[i] -= 1
+		if 10 <= secondNum && secondNum <= 26 {
+			dp[i] += dp[i-2]
 		}
 	}
 
-	if dp[originLength] < 0 {
-		return 0
-	}
 	return dp[originLength]
 }
 
@@ -64,7 +38,7 @@ func main() {
 	// stdin := bufio.NewReader(os.Stdin)
 	// s := Deserialize[string](ReadLine(stdin))
 
-	s := "10"
+	s := "226"
 	// s = "06"
 	ans := numDecodings(s)
 
