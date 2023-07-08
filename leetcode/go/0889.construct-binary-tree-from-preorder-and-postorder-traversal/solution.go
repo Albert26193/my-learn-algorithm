@@ -13,26 +13,26 @@ import (
 // @lc code=begin
 //TODO: 需要二刷
 func constructFromPrePost(preorder []int, postorder []int) (ans *TreeNode) {
-	var getTree func(pre_start int, pre_end int, post_start int, post_end int) *TreeNode
-	getTree = func(pre_start int, pre_end int, post_start int, post_end int) *TreeNode {
-		if pre_start > pre_end {
+	var getTree func(preStart int, preEnd int, postStart int, postEnd int) *TreeNode
+	getTree = func(preStart int, preEnd int, postStart int, postEnd int) *TreeNode {
+		if preStart > preEnd {
 			return nil
 		}
 
-		currentLength := pre_end - pre_start + 1
-		root := &TreeNode{Val: preorder[pre_start]}
+		currentLength := preEnd - preStart + 1
+		root := &TreeNode{Val: preorder[preStart]}
 		if currentLength == 1 {
 			return root
 		}
 
-		breakPointIndex := post_start
-		for breakPointIndex <= post_end && postorder[breakPointIndex] != preorder[pre_start+1] {
+		breakPointIndex := postStart
+		for breakPointIndex <= postEnd && postorder[breakPointIndex] != preorder[preStart+1] {
 			breakPointIndex += 1
 		}
 
-		leftCount := breakPointIndex - post_start + 1
-		root.Left = getTree(pre_start+1, pre_start+leftCount, post_start, post_start+breakPointIndex-1)
-		root.Right = getTree(pre_start+leftCount+1, pre_end, post_start+leftCount, post_end-1)
+		leftCount := breakPointIndex - postStart + 1
+		root.Left = getTree(preStart+1, preStart+leftCount, postStart, postStart+breakPointIndex-1)
+		root.Right = getTree(preStart+leftCount+1, preEnd, postStart+leftCount, postEnd-1)
 
 		return root
 	}
