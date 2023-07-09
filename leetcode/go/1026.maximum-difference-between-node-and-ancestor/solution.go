@@ -45,6 +45,11 @@ func abs(a int) int {
 	}
 }
 
+// minVal: minVal in both left children and right children
+// maxVal: maxVal in both left children and right children
+// 1. largest distance is abs(root.Val - someChildNode.Val)
+// 2. largest distance is abs(leftSonVal - someLeftChildNode.Val)
+// 3. largest distance is abs(rightSonVal - someRightChildNode.Val)
 func dfs(root *TreeNode, minVal int, maxVal int) int {
 	if root == nil {
 		return 0
