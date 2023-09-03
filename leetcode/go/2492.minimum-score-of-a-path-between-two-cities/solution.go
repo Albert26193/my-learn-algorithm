@@ -8,12 +8,17 @@ import (
 	// "bufio"
 	"fmt"
 	"math"
+
 	// "os"
 
 	. "github.com/j178/leetgo/testutils/go"
 )
 
 // @lc code=begin
+// TODO: 1. DFS    2. Union-Find      3. BFS
+
+/* BFS */
+/*
 type node struct {
 	to int
 	d  int
@@ -67,6 +72,80 @@ func minScore(n int, roads [][]int) (ans int) {
 			vis[nextCity.to] = true
 		}
 
+	}
+	return
+}
+*/
+
+type unionFind struct {
+	parent []int
+	size   []int
+	count  int
+}
+
+func newUnionFind(n int) *unionFind {
+	parent := make([]int, n)
+	size := make([]int, n)
+
+	for i := range parent {
+		parent[i] = i
+		size[i] = 1
+	}
+
+	count := n
+
+	return &unionFind{
+		parent: parent,
+		size:   size,
+		count:  count,
+	}
+}
+
+func (uf *unionFind) find(x int) int {
+	if uf.parent[x] != x {
+		uf.parent[x] = uf.find(uf.parent[x])
+	}
+
+	return uf.parent[x]
+}
+
+func (uf *unionFind) union(x int, y int) bool {
+	xRoot := uf.find(x)
+	yRoot := uf.find(y)
+
+	if xRoot == yRoot {
+		return false
+	}
+
+	if uf.size[xRoot] < uf.size[yRoot] {
+		xRoot, yRoot = yRoot, xRoot
+	}
+
+	uf.parent[yRoot] = xRoot
+	uf.size[xRoot] += uf.size[yRoot]
+	uf.count--
+	return true
+}
+
+func (uf *unionFind) connected(x int, y int) bool {
+	x = uf.find(x)
+	y = uf.find(y)
+	return x == y
+}
+
+func minScore(n int, roads [][]int) (ans int) {
+	uf := newUnionFind(n + 1)
+
+	for _, road := range roads {
+		uf.union(road[0], road[1])
+	}
+
+	ans = math.MaxInt64
+
+	for _, road := range roads {
+		if road[2] < ans && uf.connected(1, road[0]) && uf.connected(n, road[0]) {
+			ans = road[2]
+		}
 	}
 	return
 }
