@@ -12,6 +12,8 @@ import (
 	. "github.com/j178/leetgo/testutils/go"
 )
 
+// TODO: 此题还有另外的办法
+// https://leetcode.cn/problems/lowest-common-ancestor-of-deepest-leaves/solutions/2428724/liang-chong-di-gui-si-lu-pythonjavacgojs-xxnk/
 // @lc code=begin
 
 func lcaDeepestLeaves(root *TreeNode) *TreeNode {
