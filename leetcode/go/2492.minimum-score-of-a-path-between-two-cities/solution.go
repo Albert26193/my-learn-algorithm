@@ -77,6 +77,7 @@ func minScore(n int, roads [][]int) (ans int) {
 }
 */
 
+/*
 type unionFind struct {
 	parent []int
 	size   []int
@@ -149,9 +150,60 @@ func minScore(n int, roads [][]int) (ans int) {
 	}
 	return
 }
+*/
+
+type node struct {
+	to int
+	d  int
+}
+
+func minNum(a int, b int) int {
+	if a < b {
+		return a
+	} else {
+		return b
+	}
+}
+
+func minScore(n int, roads [][]int) (ans int) {
+	cityGraph := make([][]node, n)
+	minDistance := math.MaxInt64
+
+	for _, city := range roads {
+		startCity, endCity, distance := city[0]-1, city[1]-1, city[2]
+		cityGraph[startCity] = append(cityGraph[startCity], node{endCity, distance})
+		cityGraph[endCity] = append(cityGraph[endCity], node{startCity, distance})
+		minDistance = minNum(city[2], minDistance)
+	}
+	// fmt.Println(minDistance)
+
+	vis := make([]bool, n)
+
+	queue := make([]int, 0)
+
+	queue = append(queue, 0)
+	vis[0] = true
+
+	ans = math.MaxInt64
+
+	var dfs func(int)
+
+	dfs = func(x int) {
+		vis[x] = true
+
+		for _, city := range cityGraph[x] {
+			ans = minNum(ans, city.d)
+			if !vis[city.to] {
+				dfs(city.to)
+			}
+		}
+	}
+
+	dfs(0)
+	return
+}
 
 // @lc code=end
-
 func main() {
 	// stdin := bufio.NewReader(os.Stdin)
 	// n := Deserialize[int](ReadLine(stdin))
