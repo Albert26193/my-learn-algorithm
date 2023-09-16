@@ -34,11 +34,15 @@ func rob(nums []int) (ans int) {
 
 	dp[2] = maxx(nums[0], nums[1])
 
-	for i := 2; i <= numsLength; i++ {
-		dp[i] = maxx(dp[i-2]+nums[i-1], dp[i-1])
+	// space optimization
+	prev := 0
+	current := 0
+	for i := range nums {
+		temp := maxx(current, prev+nums[i])
+		prev = current
+		current = temp
 	}
-
-	ans = dp[numsLength]
+	ans = current
 	return
 }
 
