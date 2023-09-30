@@ -13,6 +13,7 @@ import (
 )
 
 // @lc code=begin
+// TODO: redo it
 func maxx(a int, b int) int {
 	if a > b {
 		return a
