@@ -39,7 +39,9 @@ func maxProfit(prices []int) (ans int) {
 	   dp[i + 1][2] = dp[i][2]
 	   dp[i + 1][2] = dp[i][1]
 	*/
+    
 
+    // TODO: space optimazation
 	days := len(prices)
 	dp := make([][3]int, days+1)
 
