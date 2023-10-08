@@ -15,18 +15,22 @@ import (
 // @lc code=begin
 
 func dailyTemperatures(temperatures []int) (ans []int) {
+	days := len(temperatures)
 	stack := []int{}
 	ans = make([]int, len(temperatures))
-	for i, temp := range temperatures {
-		for len(stack) > 0 && temperatures[stack[len(stack)-1]] < temp {
-			stackTop := stack[len(stack)-1]
-			ans[stackTop] = i - stackTop
 
+	for i := days - 1; i >= 0; i-- {
+		for (len(stack) > 0) && (temperatures[i] >= temperatures[stack[len(stack)-1]]) {
 			stack = stack[:len(stack)-1]
+		}
+
+		if len(stack) > 0 {
+			ans[i] = stack[len(stack)-1] - i
 		}
 
 		stack = append(stack, i)
 	}
+
 	return
 }
 
