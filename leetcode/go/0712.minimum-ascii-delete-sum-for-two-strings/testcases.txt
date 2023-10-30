@@ -1,0 +1,11 @@
+input:
+"sea"
+"eat"
+output:
+231
+
+input:
+"delete"
+"leet"
+output:
+403
