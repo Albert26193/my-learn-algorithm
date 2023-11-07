@@ -13,18 +13,29 @@ import (
 )
 
 // @lc code=begin
-// TODO: redo it
-func change(amount int, coins []int) (ans int) {
-	dp := make([]int, amount+1)
+// TODO: redo it,
+// first redo: 2023-11-07
 
-	dp[0] = 1
-	for _, coin := range coins {
-		for i := coin; i <= amount; i++ {
-			dp[i] += dp[i-coin]
+/*
+	f[i] = f[i -1]
+*/
+
+func change(amount int, coins []int) (ans int) {
+	coinsCount := len(coins)
+	f := make([]int, amount+1)
+
+	f[0] = 1
+
+	for i := 1; i <= coinsCount; i++ {
+		currentCoin := coins[i-1]
+		for j := 1; j <= amount; j++ {
+			if j >= currentCoin {
+				f[j] += f[j-currentCoin]
+			}
 		}
 	}
 
-	return dp[amount]
+	return f[amount]
 }
 
 // @lc code=end
