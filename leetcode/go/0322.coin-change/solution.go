@@ -94,11 +94,11 @@ func coinChange(coins []int, amount int) (ans int) {
 		dp[0] = 0
 	}
 
-	for i := 0; i <= amount; i++ {
-		for j := 0; j < coinsCount; j++ {
-			currentCoin := coins[j]
-			if i >= currentCoin {
-				dp[i] = minn(dp[i], dp[i-currentCoin]+1)
+	for i := 1; i <= coinsCount; i++ {
+		currentCoin := coins[i-1]
+		for j := 1; j <= amount; j++ {
+			if j >= currentCoin {
+				dp[j] = minn(dp[j], dp[j-currentCoin]+1)
 			}
 		}
 	}
