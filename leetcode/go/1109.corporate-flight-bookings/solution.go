@@ -4,41 +4,53 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"os"
 
 	. "github.com/j178/leetgo/testutils/go"
 )
 
 // @lc code=begin
 
+// redo it in 2023-11-12
 func corpFlightBookings(bookings [][]int, n int) (ans []int) {
+
 	diff := make([]int, n+1)
 	ans = make([]int, n)
-	for _, singleBooking := range bookings {
-		startIndex := singleBooking[0] - 1
-		endIndex := singleBooking[1] - 1
-		ticketCount := singleBooking[2]
 
-		diff[startIndex] += ticketCount
-		diff[endIndex+1] -= ticketCount
+	for i := 0; i < len(bookings); i++ {
+		first := bookings[i][0] - 1
+		last := bookings[i][1] - 1
+		seats := bookings[i][2]
+		diff[first] += seats
+		diff[last+1] -= seats
 	}
 
-	for i := 0; i < n; i++ {
-		if i == 0 {
-			ans[0] = diff[0]
-		} else {
-			ans[i] = diff[i] + ans[i-1]
-		}
+	ans[0] = diff[0]
+	for i := 1; i < n; i++ {
+		ans[i] = ans[i-1] + diff[i]
 	}
 
-	return
+	return ans
 }
 
 // @lc code=end
 func main() {
-	// stdin := bufio.NewReader(os.Stdin)
-	// bookings := Deserialize[[][]int](ReadLine(stdin))
-	bookings := [][]int{{1, 2, 10}, {2, 3, 20}, {2, 5, 25}}
+	file, err := os.Open("./testcases.txt")
+	if err != nil {
+		fmt.Println("Error", err)
+		return
+	}
+	defer file.Close()
+
+	reader := bufio.NewReader(file)
+
+	// skip first line
+	ReadLine(reader)
+
+	bookings := Deserialize[[][]int](ReadLine(reader))
+
 	n := 5
 	ans := corpFlightBookings(bookings, n)
 	fmt.Println("output: " + Serialize(ans))
