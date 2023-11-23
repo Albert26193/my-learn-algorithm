@@ -1,8 +1,5 @@
 module leetcode-solutions
 
-go 1.21.3
+go 1.20
 
-require (
-	github.com/goccy/go-json v0.10.0 // indirect
-	github.com/j178/leetgo/testutils/go v0.2.0 // indirect
-)
+require github.com/j178/leetgo/testutils/go v0.1.0
