@@ -39,5 +39,18 @@
     "prefix": "zi",
     "body": "if err != nil {\n    fmt.Println(\"Error:\", err)\n    return \n}"
   },
-  
+  "go read": {
+  "scope": "go",
+  "prefix": "zr",
+  "body": [
+    "file, err := os.Open(\"./testcases.txt\")",
+    "if err != nil {",
+    "    fmt.Println(\"Error\", err)",
+    "    return",
+    "}",
+    "",
+    "in := bufio.NewReader(file)",
+    "defer file.Close()"
+  ]
+}
 }
