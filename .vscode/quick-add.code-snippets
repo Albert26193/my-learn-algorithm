@@ -33,5 +33,11 @@
     "scope": "go",
     "prefix": "zgomain",
     "body": "func main(){}"
-  }
+  },
+  "go if err" :{
+    "scope": "go",
+    "prefix": "zi",
+    "body": "if err != nil {\n    fmt.Println(\"Error:\", err)\n    return \n}"
+  },
+  
 }
