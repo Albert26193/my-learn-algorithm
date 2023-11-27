@@ -14,6 +14,13 @@ func max(a int, b int) int {
 }
 
 func main() {
+	// file, err := os.Open("./testcases.txt")
+	// if err != nil {
+	// 	fmt.Println("Error", err)
+	// 	return
+	// }
+	// in := bufio.NewReader(file)
+	// defer file.Close()
 	in := bufio.NewReader(os.Stdin)
 	var T int
 	fmt.Fscan(in, &T)
@@ -21,7 +28,7 @@ func main() {
 	for T > 0 {
 		T--
 		var N int
-		fmt.Fscan("%d", &N)
+		fmt.Fscan(in, &N)
 
 		shops := make([]int, N)
 		for i := 0; i < N; i++ {
