@@ -7,10 +7,20 @@ import (
 )
 
 // redo it
+// TAGS: 模拟
 func main() {
 	var n, m int
 
-	in := bufio.NewReader(os.Stdin)
+	file, err := os.Open("./testcases.txt")
+	if err != nil {
+		fmt.Println("Error", err)
+		return
+	}
+
+	in := bufio.NewReader(file)
+	defer file.Close()
+
+	// in := bufio.NewReader(os.Stdin)
 
 	fmt.Fscan(in, &n)
 	fmt.Fscan(in, &m)
