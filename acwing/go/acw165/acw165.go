@@ -8,6 +8,7 @@ import (
 
 var N, W int
 
+// TAGS: dp
 func main() {
 	in := bufio.NewReader(os.Stdin)
 
