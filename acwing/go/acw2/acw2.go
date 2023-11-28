@@ -17,16 +17,16 @@ import (
 
 func main() {
 	// input
-	// file, err := os.Open("./testcases.txt")
-	// if err != nil {
-	// 	fmt.Println("Error", err)
-	// 	return
-	// }
-	//
-	// in := bufio.NewReader(file)
-	// defer file.Close()
+	file, err := os.Open("./testcases.txt")
+	if err != nil {
+		fmt.Println("Error", err)
+		return
+	}
 
-	in := bufio.NewReader(os.Stdin)
+	in := bufio.NewReader(file)
+	defer file.Close()
+
+	// in := bufio.NewReader(os.Stdin)
 	var N, V int
 	fmt.Fscan(in, &N)
 	fmt.Fscan(in, &V)
@@ -40,24 +40,34 @@ func main() {
 
 	// fmt.Println(N, V, v, w)
 
-	// core
-	f := make([][]int, N+1)
-	for i := 0; i <= N; i++ {
-		f[i] = make([]int, V+1)
-	}
+	// no optimization
+	/*
+		f := make([][]int, N+1)
+		for i := 0; i <= N; i++ {
+			f[i] = make([]int, V+1)
+		}
 
-	f[0][0] = 0
-	for i := 1; i <= N; i++ {
-		for j := 1; j <= V; j++ {
-			f[i][j] = f[i-1][j]
-			currentVolume := v[i-1]
-			if j >= currentVolume {
-				f[i][j] = maxx(f[i][j], f[i-1][j-currentVolume]+w[i-1])
+		f[0][0] = 0
+		for i := 1; i <= N; i++ {
+			for j := 1; j <= V; j++ {
+				f[i][j] = f[i-1][j]
+				currentVolume := v[i-1]
+				if j >= currentVolume {
+					f[i][j] = maxx(f[i][j], f[i-1][j-currentVolume]+w[i-1])
+				}
 			}
+		}*/
+
+	// reverse iterator
+	f := make([]int, V+1)
+	for i := 0; i < N; i++ {
+		currentVolume := v[i]
+		for j := V; j >= currentVolume; j-- {
+			f[j] = maxx(f[j-currentVolume]+w[i], f[j])
 		}
 	}
 
-	fmt.Println(f[N][V])
+	fmt.Println(f[V])
 }
 
 func maxx(nums ...int) int {
