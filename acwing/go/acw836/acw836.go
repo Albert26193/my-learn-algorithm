@@ -50,13 +50,12 @@ type unionFind struct {
 func newUnionFind(n int) *unionFind {
 	parent := make([]int, n)
 	size := make([]int, n)
+	count := n
 
-	for i := range parent {
+	for i := 0; i < n; i++ {
 		parent[i] = i
 		size[i] = 1
 	}
-
-	count := n
 
 	return &unionFind{
 		parent: parent,
@@ -87,12 +86,15 @@ func (uf *unionFind) union(x int, y int) bool {
 
 	uf.parent[yRoot] = xRoot
 	uf.size[xRoot] += uf.size[yRoot]
-	uf.count--
+	uf.count -= 1
+
 	return true
 }
 
 func (uf *unionFind) connected(x int, y int) bool {
-	x = uf.find(x)
-	y = uf.find(y)
-	return x == y
+	if uf.find(x) == uf.find(y) {
+		return true
+	}
+
+	return false
 }
