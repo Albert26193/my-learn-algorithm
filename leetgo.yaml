@@ -7,7 +7,4 @@ code:
     out_dir: ./leetcode/go
 leetcode:
   site: https://leetcode.cn
-#  credentials:
-#    from: browser
-#editor:
-#  use: none
+  from: cookies
