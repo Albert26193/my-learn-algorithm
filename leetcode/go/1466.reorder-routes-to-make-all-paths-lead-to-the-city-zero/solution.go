@@ -15,6 +15,7 @@ import (
 
 // @lc code=begin
 
+// TODO: check official solutions
 func minReorder(n int, connections [][]int) (ans int) {
 	dia := make([][]int, n)
 	recordDirection := make(map[string]bool)
