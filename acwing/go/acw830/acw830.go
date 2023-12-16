@@ -9,64 +9,56 @@ import (
 // TAGS: monotonic stack
 
 func main() {
-	// read
 	file, err := os.Open("./testcases.txt")
 	if err != nil {
-		fmt.Println("Error", err)
+		fmt.Println("Error:", err)
 		return
 	}
 
 	in := bufio.NewReader(file)
 	defer file.Close()
 
-	// in := bufio.NewReader(os.Stdin)
 	var N int
 	fmt.Fscan(in, &N)
 
-	var nums = make([]int, N)
+	var nums []int
 	for i := 0; i < N; i++ {
-		fmt.Fscan(in, &nums[i])
+		var num int
+		fmt.Fscan(in, &num)
+		nums = append(nums, num)
 	}
 
-	// fmt.Println(N, nums)
-
-	// Monotonic stack
+	// fmt.Println(nums)
 	stack := make([]int, 0)
 	rec := make(map[int]int)
 
 	for i := 0; i < N; i++ {
-		currentNum := nums[i]
-
-		// pop
-		for len(stack) > 0 && currentNum <= nums[stack[len(stack)-1]] {
+		for len(stack) > 0 && nums[i] < nums[stack[len(stack)-1]] {
 			stack = stack[:len(stack)-1]
 		}
 
-		// stack top is the value
-		if len(stack) > 0 {
-			rec[i] = stack[len(stack)-1]
-		} else {
-			// if can not find it
+		if len(stack) == 0 {
 			rec[i] = -1
+		} else {
+			rec[i] = stack[len(stack)-1]
 		}
 
-		// push
 		stack = append(stack, i)
 	}
 
-	ans := make([]int, 0)
 	for i := 0; i < N; i++ {
-		if rec[i] == -1 {
-			ans = append(ans, -1)
-		} else {
-			ans = append(ans, nums[rec[i]])
-		}
-	}
+		out := 0
 
-	for i := 0; i < N; i++ {
-		if i != 0 {
-			fmt.Printf(" ")
+		if rec[i] == -1 {
+			out = -1
+		} else {
+			out = nums[rec[i]]
 		}
-		fmt.Printf("%d", ans[i])
+
+		if i > 0 {
+			fmt.Printf(" %d", out)
+		} else {
+			fmt.Printf("%d", out)
+		}
 	}
 }
