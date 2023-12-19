@@ -1,4 +1,17 @@
 input:
+[["A","B","C","E"],["S","F","E","S"],["A","D","E","E"]]
+"ABCESEEEFS"
+output:
+true
+
+input:
+[["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]]
+"ABCB"
+output:
+false
+
+
+input:
 [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]]
 "ABCCED"
 output:
@@ -10,8 +23,3 @@ input:
 output:
 true
 
-input:
-[["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]]
-"ABCB"
-output:
-false
