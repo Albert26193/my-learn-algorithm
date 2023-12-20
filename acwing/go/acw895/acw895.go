@@ -31,7 +31,7 @@ func main() {
 		f[i] = 1
 		for j := 0; j < i; j++ {
 			if arr[i] > arr[j] {
-				f[i] = maxx(f[i], f[j] + 1)
+				f[i] = maxx(f[i], f[j]+1)
 			}
 		}
 	}
