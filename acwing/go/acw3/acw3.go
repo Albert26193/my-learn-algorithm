@@ -11,16 +11,15 @@ import (
 
 func main() {
 	// read
-	// file, err := os.Open("./testcases.txt")
-	// if err != nil {
-	// 	fmt.Println("Error", err)
-	// 	return
-	// }
-	//
-	// in := bufio.NewReader(file)
-	// defer file.Close()
+	file, err := os.Open("./testcases.txt")
+	if err != nil {
+		fmt.Println("Error", err)
+		return
+	}
 
-	in := bufio.NewReader(os.Stdin)
+	in := bufio.NewReader(file)
+	defer file.Close()
+
 	var N, V int
 	fmt.Fscan(in, &N)
 	fmt.Fscan(in, &V)
@@ -37,8 +36,8 @@ func main() {
 	f := make([]int, V+1)
 	for i := 0; i < N; i++ {
 		currentCost := v[i]
-		for j := v[i]; j <= V; j++ {
-			f[j] = maxx(f[j], f[j-currentCost]+w[i])
+		for k := currentCost; k <= V; k++ {
+			f[k] = maxx(f[k-currentCost]+w[i], f[k])
 		}
 	}
 
