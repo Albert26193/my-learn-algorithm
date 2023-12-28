@@ -50,7 +50,6 @@ func main() {
 
 	fmt.Println(v, w, s)
 	fmt.Println(f[N][V])
-	
 
 }
 

@@ -19,7 +19,7 @@ func main() {
 	var n, m int
 	fmt.Fscan(in, &n, &m)
 
-	fmt.Println(n, m)
+	// fmt.Println(n, m)
 
 	var arr = make([]int, n)
 	for i := 0; i < n; i++ {
