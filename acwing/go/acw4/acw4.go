@@ -19,37 +19,39 @@ func main() {
 	defer file.Close()
 
 	var N, V int
-	fmt.Fscan(in, &N)
-	fmt.Fscan(in, &V)
+	fmt.Fscan(in, &N, &V)
 
 	var v = make([]int, N)
 	var w = make([]int, N)
 	var s = make([]int, N)
 
+	allCount := 0
 	for i := 0; i < N; i++ {
-		fmt.Fscan(in, &v[i])
-		fmt.Fscan(in, &w[i])
-		fmt.Fscan(in, &s[i])
+		fmt.Fscan(in, &v[i], &w[i], &s[i])
+		allCount += s[i]
 	}
 
-	f := make([][]int, N+1)
-	for i := 0; i <= N; i++ {
-		f[i] = make([]int, V+1)
-	}
+	f := make([]int, V+1)
 
-	for i := 1; i <= N; i++ {
-		currentVolume := v[i-1]
-		for j := 0; j <= V; j++ {
-			for k := 0; k <= s[i-1]; k++ {
-				if j >= k*currentVolume {
-					f[i][j] = maxx(f[i][j], f[i-1][j-k*currentVolume]+k*w[i-1])
-				}
+	for i := 0; i < N; i++ {
+		for j := 0; j < s[i]; j++ {
+			currentVolume := v[i]
+			for k := V; k >= currentVolume; k-- {
+				f[k] = maxx(f[k], f[k-currentVolume]+w[i])
 			}
 		}
 	}
 
-	fmt.Println(v, w, s)
-	fmt.Println(f[N][V])
+	// for i := 0; i < N; i++ {
+	// 	for j := V; j >= v[i]; j-- {
+	// 		for k := 1; k <= s[i] && k*v[i] <= j; k++ {
+	// 			f[j] = maxx(f[j], f[j-k*v[i]]+k*w[i])
+	// 		}
+	// 	}
+	// }
+
+	// fmt.Println(v, w, s)
+	fmt.Println(f[V])
 
 }
 
