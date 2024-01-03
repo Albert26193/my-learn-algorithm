@@ -14,53 +14,95 @@ import (
 
 // @lc code=begin
 
-type unionFind struct {
-	fa   map[int]int
-	size map[int]int
-}
+// union-find
+// type unionFind struct {
+// 	fa   map[int]int
+// 	size map[int]int
+// }
+//
+// func (uf *unionFind) find(x int) int {
+// 	if uf.fa[x] != x {
+// 		uf.fa[x] = uf.find(uf.fa[x])
+// 	}
+//
+// 	return uf.fa[x]
+// }
+//
+// func (uf *unionFind) merge(x int, y int) {
+// 	fax := uf.find(x)
+// 	fay := uf.find(y)
+// 	if fax != fay {
+// 		uf.fa[y] = fax
+// 		uf.size[fax] += uf.size[fay]
+// 	}
+//
+// }
+//
+// func longestConsecutive(nums []int) (ans int) {
+// 	uf := &unionFind{
+// 		fa:   make(map[int]int),
+// 		size: make(map[int]int),
+// 	}
+//
+// 	for _, num := range nums {
+// 		uf.fa[num] = num
+// 		uf.size[num] = 1
+// 	}
+//
+// 	for _, num := range nums {
+// 		if _, ok := uf.fa[num+1]; ok {
+// 			uf.merge(num, num+1)
+// 		}
+// 	}
+//
+// 	ans = 0
+// 	for _, num := range nums {
+// 		if uf.size[num] > ans {
+// 			ans = uf.size[num]
+// 		}
+// 	}
+// 	return
+// }
+//
 
-func (uf *unionFind) find(x int) int {
-	if uf.fa[x] != x {
-		uf.fa[x] = uf.find(uf.fa[x])
-	}
-
-	return uf.fa[x]
-}
-
-func (uf *unionFind) merge(x int, y int) {
-	fax := uf.find(x)
-	fay := uf.find(y)
-	if fax != fay {
-		uf.fa[y] = fax
-		uf.size[fax] += uf.size[fay]
-	}
-
-}
+// hash map
 
 func longestConsecutive(nums []int) (ans int) {
-	uf := &unionFind{
-		fa:   make(map[int]int),
-		size: make(map[int]int),
+
+	// key: index; value: range length
+	mp := make(map[int]bool)
+
+	// for every left endpoint
+	for _, num := range nums {
+		mp[num] = true
 	}
 
-	for _, num := range nums {
-		uf.fa[num] = num
-		uf.size[num] = 1
-	}
-
-	for _, num := range nums {
-		if _, ok := uf.fa[num+1]; ok {
-			uf.merge(num, num+1)
+	for num := range mp {
+		if mp[num-1] {
+			continue
 		}
+
+		currentLength := 1
+		for mp[num+1] {
+			num += 1
+			currentLength += 1
+		}
+
+		ans = maxx(ans, currentLength)
 	}
 
-	ans = 0
-	for _, num := range nums {
-		if uf.size[num] > ans {
-			ans = uf.size[num]
-		}
-	}
 	return
+}
+
+func maxx(nums ...int) int {
+	res := nums[0]
+	for _, v := range nums {
+		if v > res {
+			res = v
+		}
+	}
+
+	return res
 }
 
 // @lc code=end
