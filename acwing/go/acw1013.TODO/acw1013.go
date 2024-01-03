@@ -27,16 +27,24 @@ func main() {
 		}
 	}
 
-	f := make([]int, n+1)
-	for i := 0; i < m; i++ {
-		for j := 0; j < n; j++ {
-			for k := n; k >= 1; k-- {
-				f[k] = maxx(f[k], f[k-1]+profit[j][i])
+	f := make([]int, m+1)
+	cnt := make([]int, n)
+	for i := 0; i < n; i++ {
+		for j := 1; j <= m; j++ {
+			for k := m; k >= j; k-- {
+				profit := f[k-j] + profit[i][j-1]
+				if profit > f[k] {
+					cnt[i] = j
+					f[k] = profit
+				}
 			}
 		}
 	}
 
-	fmt.Println(f[n])
+	fmt.Println(f[m])
+	for i := 0; i < n; i++ {
+		fmt.Println(i + 1, cnt[i])
+	}
 }
 
 func maxx(nums ...int) int {
