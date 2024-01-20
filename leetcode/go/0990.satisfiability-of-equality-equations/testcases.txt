@@ -1,0 +1,15 @@
+input:
+["a==b","e==c","b==c","a!=e"]
+output:
+false
+
+input:
+["b==a","a==b"]
+output:
+true
+
+input:
+["a==b","b!=a"]
+output:
+false
+
