@@ -13,40 +13,40 @@ import (
 )
 
 // @lc code=begin
-var fa = make(map[int]int)
+func removeStones(stones [][]int) int {
+	var fa = make(map[int]int)
 
-func find(x int) int {
-	if _, ok := fa[x]; !ok {
-		fa[x] = x
-	}
-
-	if fa[x] != x {
-		fa[x] = find(fa[x])
-	}
-	return fa[x]
-}
-
-func merge(x int, y int) {
-	fx, fy := find(x), find(y)
-	if fx == fy {
-		return
-	}
-	fa[fx] = fy
-}
-
-func getCnt() int {
-	rec := 0
-	for k := range fa {
-		if fa[k] == k {
-			rec += 1
+	var find func(int) int
+	find = func(x int) int {
+		if _, ok := fa[x]; !ok {
+			fa[x] = x
 		}
+
+		if fa[x] != x {
+			fa[x] = find(fa[x])
+		}
+		return fa[x]
 	}
 
-	return rec
-}
+	var merge = func(x int, y int) {
+		fx, fy := find(x), find(y)
+		if fx == fy {
+			return
+		}
+		fa[fx] = fy
+	}
 
-func removeStones(stones [][]int) (ans int) {
-	const offset = 0x3f3f3f3f
+	var getCnt = func() int {
+		rec := 0
+		for k := range fa {
+			if fa[k] == k {
+				rec += 1
+			}
+		}
+		return rec
+	}
+
+	const offset = 100001
 
 	n := len(stones)
 

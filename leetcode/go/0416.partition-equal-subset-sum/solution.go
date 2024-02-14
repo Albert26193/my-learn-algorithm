@@ -29,49 +29,31 @@ func getSum(nums []int) int {
 	return cnt
 }
 
+// 01 back package
 func canPartition(nums []int) bool {
-	numsLength := len(nums)
-	totalSum := getSum(nums)
+	n := len(nums)
 
-	if totalSum%2 == 1 {
+	V := getSum(nums)
+	f := make([]bool, V+1)
+
+	if V%2 != 0 {
 		return false
 	}
 
-	if numsLength == 0 || numsLength == 1 {
-		return false
-	}
-
-	targetSum := totalSum / 2
-
-	f := make([][]bool, numsLength+1)
-	for i := 0; i <= numsLength; i++ {
-		f[i] = make([]bool, totalSum+1)
-	}
-
-	// boundary:
-	f[0][0] = true
-	for i := 1; i <= numsLength; i++ {
-		f[i][0] = true
-		f[i][nums[i-1]] = true
-	}
-
-	for i := 1; i <= numsLength; i++ {
-		currentNum := nums[i-1]
-		for j := 0; j <= targetSum; j++ {
-			if j >= currentNum {
-				f[i][j] = f[i-1][j] || f[i-1][j-currentNum]
-			} else {
-				f[i][j] = f[i-1][j]
+	target := V / 2
+	f[0] = true
+	for i := 0; i < n; i++ {
+		currentVolume := nums[i]
+		for j := target; j >= currentVolume; j-- {
+			if f[target] {
+				return true
 			}
-		}
 
-		if f[i][targetSum] {
-			return true
+			f[j] = f[j] || f[j-nums[i]]
 		}
-
 	}
 
-	return false
+	return f[target]
 }
 
 // @lc code=end

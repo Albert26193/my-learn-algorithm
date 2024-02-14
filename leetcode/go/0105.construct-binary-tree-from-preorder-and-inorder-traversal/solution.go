@@ -10,18 +10,17 @@ import (
 	. "github.com/j178/leetgo/testutils/go"
 )
 
-//TODO: 结合889系列去看
+// TODO: 结合889系列去看
 // @lc code=begin
 // preorder := [3, 9, 20, 15, 7].  inorder := [9, 3, 15, 20, 7]
-//            3
-//          9    20
-//             15  7
+//
+//	  3
+//	9    20
+//	   15  7
+//
 // pre:                 3 [9] [20, 15, 7]
 // breakPointIndex      ^
 // in:                  [9]  3 [15 20  7]
-//
-//
-//
 func buildTree(preorder []int, inorder []int) (ans *TreeNode) {
 	var getTree func(preStart int, preEnd int, inStart int, inEnd int) *TreeNode
 	getTree = func(preStart int, preEnd int, inStart int, inEnd int) *TreeNode {

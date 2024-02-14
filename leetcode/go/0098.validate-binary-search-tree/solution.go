@@ -29,7 +29,7 @@ func isValidBST(root *TreeNode) bool {
 		return dfs(node.Left, lower, node.Val) && dfs(node.Right, node.Val, higher)
 	}
 
-	return dfs(root, math.MinInt32, math.MaxInt32)
+	return dfs(root, math.MinInt64, math.MaxInt64)
 }
 
 // @lc code=end

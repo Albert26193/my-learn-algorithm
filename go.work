@@ -2,5 +2,6 @@ go 1.21.4
 
 use (
 	./acwing/go
+	./interview/go
 	./leetcode/go
 )
