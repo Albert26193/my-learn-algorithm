@@ -27,4 +27,33 @@ func TestMul(t *testing.T) {
 			t.Fatal("fail")
 		}
 	})
+
+}
+
+func TestDemo(t *testing.T) {
+	testCaess := []struct {
+		name string
+		num1 int
+		num2 int
+		want int
+	}{
+		{
+			name: "multiple: 5 * 5",
+			num1: 5,
+			num2: 5,
+			want: 25,
+		},
+		{
+			name: "multiple: 15 * 7",
+			num1: 15,
+			num2: 7,
+			want: 105,
+		},
+	}
+
+	for _, tt := range testCaess {
+		if got := Mul(tt.num1, tt.num2); got != tt.want {
+			t.Errorf("prepend Result is %v, but got %v", tt.want, got)
+		}
+	}
 }

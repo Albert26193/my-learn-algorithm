@@ -5,76 +5,58 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"os"
 
 	. "github.com/j178/leetgo/testutils/go"
 )
 
 // @lc code=begin
-type Position struct {
-	minLength int
-	subString string
-}
-
-func checkWindowStatus(recordCounts []int, patternCounts []int) bool {
-	for i := 0; i < len(patternCounts); i++ {
-		if recordCounts[i] < patternCounts[i] {
-			return false
-		}
-	}
-
-	return true
-}
-
 func minWindow(s string, t string) string {
-	minLengthPosition := Position{
-		minLength: 0x3f3f3f3f,
-		subString: "",
-	}
+	ms, mt := make(map[byte]int), make(map[byte]int)
+	ns, nt := len(s), len(t)
+	l, r := 0, 0
+	cnt := 0
 
-	recordCounts := make([]int, 126)
-	patternCounts := make([]int, 126)
-	originStringLength := len(s)
-	startIndex, endIndex := 0, 0
+	res := ""
+	for r = 0; r < ns; r++ {
+		ms[s[r]]++
 
-	for index := range t {
-		tCharCode := t[index] - 'A'
-		patternCounts[tCharCode] += 1
-	}
+		if mt[s[r]] >= ms[s[r]] {
+			cnt++
+		}
 
-	for endIndex = 0; endIndex < originStringLength; endIndex += 1 {
-		endCharCode := s[endIndex] - 'A'
-		recordCounts[endCharCode] += 1
+		for l < r && ms[s[l]] > mt[s[l]] {
+			ms[s[l]]--
+			l++
+		}
 
-		for (checkWindowStatus(recordCounts, patternCounts)) && (startIndex <= endIndex) {
-			eligibleLength := (endIndex - startIndex + 1)
-			if eligibleLength < minLengthPosition.minLength {
-				minLengthPosition.minLength = eligibleLength
-				minLengthPosition.subString = s[startIndex : endIndex+1]
-			}
-
-			startCharCode := s[startIndex] - 'A'
-			recordCounts[startCharCode] -= 1
-			startIndex += 1
+		if cnt == nt {
+			
 		}
 
 	}
-
-	return minLengthPosition.subString
+	return ""
 }
 
 // @lc code=end
 
 func main() {
-	// stdin := bufio.NewReader(os.Stdin)
-	// s := Deserialize[string](ReadLine(stdin))
-	// t := Deserialize[string](ReadLine(stdin))
+	//stdin := bufio.NewReader(os.Stdin)
+	file, err := os.Open("./testcases.txt")
+	if err != nil {
+		fmt.Println("Error", err)
+		return
+	}
 
-	s := "ADOBECODEBANC"
-	t := "ABC"
+	in := bufio.NewReader(file)
+	defer file.Close()
 
-	s = "A"
-	t = "A"
+	ReadLine(in)
+	s := Deserialize[string](ReadLine(in))
+	t := Deserialize[string](ReadLine(in))
+
 	ans := minWindow(s, t)
 
 	fmt.Println("\noutput:", Serialize(ans))

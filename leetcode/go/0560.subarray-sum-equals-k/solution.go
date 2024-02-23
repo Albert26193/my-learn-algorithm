@@ -15,27 +15,24 @@ import (
 // @lc code=begin
 
 func subarraySum(nums []int, k int) int {
-	lenNUms := len(nums)
-	preSum := make([]int, lenNUms+1)
+	n := len(nums)
 
-	for i := 1; i <= lenNUms; i++ {
+	preSum := make([]int, n+1)
+
+	for i := 1; i <= n; i++ {
 		preSum[i] = preSum[i-1] + nums[i-1]
 	}
 
-	// key: sum
-	// value: count
-	record := make(map[int]int)
+	// mp: k: prefix sum  v: count
+	mp := make(map[int]int)
 	cnt := 0
-	for i := 0; i <= lenNUms; i++ {
-		currentSum := preSum[i]
-		if _, exist := record[currentSum-k]; exist {
-			cnt += record[currentSum-k]
+	for i := 0; i <= n; i++ {
+		if _, ok := mp[preSum[i]-k]; ok {
+			cnt += mp[preSum[i]-k]
 		}
-
-		record[preSum[i]] += 1
+		mp[preSum[i]] += 1
 	}
 
-	// fmt.Println(preSum)
 	return cnt
 }
 

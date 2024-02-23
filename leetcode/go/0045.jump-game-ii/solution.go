@@ -14,32 +14,27 @@ import (
 
 // TODO
 // @lc code=begin
-func tempMax(a int, b int) int {
-	if a > b {
-		return a
-	} else {
-		return b
-	}
-}
+func jump(nums []int) int {
+	jumps := 0      // 跳跃次数
+	currentEnd := 0 // 当前跳跃可以到达的最远位置
+	farthest := 0   // 所有能跳到的位置中，最远的那个位置
 
-func jump(nums []int) (ans int) {
-	numsLength := len(nums)
-	maxStepPosition := 0
+	// 遍历数组，但不包括最后一个元素，因为到达最后一个元素时不需要再跳跃
+	for i := 0; i < len(nums)-1; i++ {
+		// 更新能跳到的最远位置
+		if i+nums[i] > farthest {
+			farthest = i + nums[i]
+		}
 
-	jumpCount := 0
-	end := 0
-	for i := 0; i < numsLength-1; i++ {
-		// 继续往下遍历，统计边界范围内，哪一格能跳得更远，每走一步就更新一次能跳跃的最远位置下标
-		// 其实就是在统计下一步的最优情况
-		maxStepPosition = tempMax(maxStepPosition, nums[i]+i)
-		// 如果到达了边界，那么一定要跳了，下一跳的边界下标就是之前统计的最优情况maxPosition，并且步数加1
-		if i == end {
-			end = maxStepPosition
-			jumpCount += 1
+		// 如果到达了当前跳跃可以到达的最远位置
+		// 需要进行下一次跳跃，更新当前跳跃的最远位置为之前计算的最远位置
+		if i == currentEnd {
+			jumps++
+			currentEnd = farthest
 		}
 	}
 
-	return jumpCount
+	return jumps
 }
 
 // @lc code=end

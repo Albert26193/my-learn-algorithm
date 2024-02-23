@@ -15,24 +15,25 @@ import (
 // @lc code=begin
 
 func subarraysDivByK(nums []int, k int) (ans int) {
-	lenNums := len(nums)
-	preSum := make([]int, lenNums+1)
+	n := len(nums)
 
-	for i := 1; i <= lenNums; i++ {
+	preSum := make([]int, n+1)
+
+	for i := 1; i <= n; i++ {
 		preSum[i] = preSum[i-1] + nums[i-1]
 	}
 
-	// record: key: currentSum % k
-	// record: value: count for key
-	record := make(map[int]int)
-	for i := 0; i <= lenNums; i++ {
-		currentSum := preSum[i]
-		rest := (currentSum%k + k) % k
-		if _, exist := record[rest]; exist {
-			ans += record[rest]
+	// k: preSum % k
+	// v: cnt
+	mp := make(map[int]int)
+	rest := 0
+	for i := 0; i <= n; i++ {
+		rest = (k + preSum[i]%k) % k
+		if _, ok := mp[rest]; ok {
+			ans += mp[rest]
 		}
 
-		record[rest] += 1
+		mp[rest] += 1
 	}
 
 	return

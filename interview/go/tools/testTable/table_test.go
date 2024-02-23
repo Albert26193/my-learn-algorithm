@@ -13,10 +13,8 @@ func TestMul(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		t.Run(c.Name, func(t *testing.T) {
-			if ans := Mul(c.A, c.B); ans != c.Excepted {
-				t.Fatalf("%d * %d should be %d", c.A, c.B, c.Excepted)
-			}
-		})
+		if ans := Mul(c.A, c.B); ans != c.Excepted {
+			t.Fatalf("%d * %d should be %d", c.A, c.B, c.Excepted)
+		}
 	}
 }

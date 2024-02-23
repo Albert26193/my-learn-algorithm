@@ -6,29 +6,29 @@ import (
 )
 
 func TestPreAppend(t *testing.T) {
-	test := []struct {
+	testCases := []struct {
 		name   string
 		nums   []int
 		values []int
 		want   []int
 	}{
 		{
-			name:   "prepend 1, 2, 3 to empty slice",
+			name:   "prepend 1, 2, 3 to empty slices",
 			nums:   []int{},
 			values: []int{1, 2, 3},
 			want:   []int{3, 2, 1},
 		},
 		{
-			name:   "prepend 1, 2, 3 to existing slice",
-			nums:   []int{5, 5},
+			name:   "prepend 1, 2, 3 to existing slices",
+			nums:   []int{5, 4},
 			values: []int{1, 2, 3},
-			want:   []int{3, 2, 1, 5, 5},
+			want:   []int{3, 2, 1, 5, 4},
 		},
 	}
 
-	for _, tt := range test {
+	for _, tt := range testCases {
 		if got := prependNums(tt.nums, tt.values...); !reflect.DeepEqual(got, tt.want) {
-			t.Errorf("prepend result is %v, but want %v", got, tt.want)
+			t.Errorf("prepend result is %v, but got %v", got, tt.want)
 		}
 	}
 }

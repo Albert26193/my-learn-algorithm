@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"math/rand"
 	"os"
 )
 
@@ -36,6 +37,32 @@ func quickSort(arr []int, left int, right int) {
 	quickSort(arr, newPivotIndex+1, right)
 }
 
+func quickSortV1(arr []int, left int, right int) {
+	if right <= left {
+		return
+	}
+
+	pivot := arr[left+rand.Intn(right-left+1)]
+	big, small, equal := make([]int, 0), make([]int, 0), make([]int, 0)
+
+	for _, num := range arr[left : right+1] {
+		switch {
+		case num > pivot:
+			big = append(big, num)
+		case num == pivot:
+			equal = append(equal, num)
+		case num < pivot:
+			small = append(small, num)
+		}
+	}
+
+	copy(arr[left:], append(small, append(equal, big...)...))
+	// fmt.Println(arr, "ffffff")
+
+	quickSortV1(arr, left, left+len(small)-1)
+	quickSortV1(arr, left+len(small)+len(equal), right)
+}
+
 func main() {
 	file, err := os.Open("./testcases.txt")
 	if err != nil {
@@ -55,6 +82,6 @@ func main() {
 		fmt.Fscan(in, &arr[i])
 	}
 
-	quickSort(arr, 0, n - 1)
+	quickSortV1(arr, 0, n-1)
 	fmt.Println(arr)
 }

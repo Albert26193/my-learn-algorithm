@@ -5,58 +5,64 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"os"
 
 	. "github.com/j178/leetgo/testutils/go"
 )
 
 // @lc code=begin
-//TODO: 需要二刷
+
 func constructFromPrePost(preorder []int, postorder []int) (ans *TreeNode) {
-	var getTree func(preStart int, preEnd int, postStart int, postEnd int) *TreeNode
-	getTree = func(preStart int, preEnd int, postStart int, postEnd int) *TreeNode {
-		if preStart > preEnd {
+	var getTree func(pre []int, post []int) *TreeNode
+	getTree = func(pre, post []int) *TreeNode {
+		if len(pre) == 0 || len(post) == 0 || len(pre) != len(post) {
 			return nil
 		}
 
-		currentLength := preEnd - preStart + 1
-		root := &TreeNode{Val: preorder[preStart]}
-		if currentLength == 1 {
+		n := len(pre)
+		root := &TreeNode{
+			Val: pre[0],
+		}
+
+		if n == 1 {
 			return root
 		}
 
-		breakPointIndex := postStart
-		for breakPointIndex <= postEnd && postorder[breakPointIndex] != preorder[preStart+1] {
-			breakPointIndex += 1
+		leftLen := 0
+		for i := 0; i < n; i++ {
+			if post[i] == pre[1] {
+				leftLen = i + 1
+				break
+			}
 		}
 
-		leftCount := breakPointIndex - postStart + 1
-		root.Left = getTree(preStart+1, preStart+leftCount, postStart, postStart+breakPointIndex-1)
-		root.Right = getTree(preStart+leftCount+1, preEnd, postStart+leftCount, postEnd-1)
+		root.Left = getTree(pre[1:leftLen+1], post[:leftLen])
+		root.Right = getTree(pre[leftLen+1:], post[leftLen:len(post)-1])
 
 		return root
 	}
-	return getTree(0, len(preorder)-1, 0, len(postorder)-1)
+
+	ans = getTree(preorder, postorder)
+	return ans
 }
 
 // @lc code=end
-//      1
-//   2     3
-//  4 5   6 7
-// pre  :                       1 [ *2* 4 5] [3 6 7]
-// post :                        [4 5 *2*] [6 7 3] 1
-// breakPointIndex  post :             ^
-//  leftCount = 2 - 0 + 1 = 3
-//
-//
 
 func main() {
 	// stdin := bufio.NewReader(os.Stdin)
-	// preorder := Deserialize[[]int](ReadLine(stdin))
-	// postorder := Deserialize[[]int](ReadLine(stdin))
+	file, err := os.Open("./testcases.txt")
+	if err != nil {
+		fmt.Println("Error", err)
+		return
+	}
 
-	preorder := []int{1, 2, 4, 5, 3, 6, 7}
-	postorder := []int{4, 5, 2, 6, 7, 3, 1}
+	in := bufio.NewReader(file)
+	defer file.Close()
+	ReadLine(in)
+	preorder := Deserialize[[]int](ReadLine(in))
+	postorder := Deserialize[[]int](ReadLine(in))
 	ans := constructFromPrePost(preorder, postorder)
 
 	fmt.Println("\noutput:", Serialize(ans))
