@@ -4,7 +4,7 @@ language: zh
 code:
   lang: go
   go:
-    out_dir: ./leetcode/go
+    out_dir: ./leetcode
 leetcode:
   site: https://leetcode.cn
   from: cookies

@@ -2,6 +2,8 @@ go 1.21.4
 
 use (
 	./go/acwing
+	./go/interview
 	./go/leetcode
-	./leetcode/go
+	./go/misc
+	./go/newcoder
 )

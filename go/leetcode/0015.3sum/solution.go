@@ -12,7 +12,7 @@ import (
 )
 
 // @lc code=begin
-//TODO: 需要二刷一下，题目还是非常不错的，此外，检查数组范围合法性，请务必独立出函数
+// TODO: 需要二刷一下，题目还是非常不错的，此外，检查数组范围合法性，请务必独立出函数
 func checkRange(left int, right int, nums []int) bool {
 	leftBoundary := 0
 	rightBoundary := len(nums) - 1
