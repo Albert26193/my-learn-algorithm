@@ -1,0 +1,17 @@
+{
+  "name": "ts-algorithm",
+  "version": "0.0.1",
+  "description": "ts algorithm",
+  "scripts": {
+    "dev": "tsup --watch",
+    "build": "tsup"
+  },
+  "author": "Albert Wang",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "@types/node": "^20.8.8",
+    "tsx": "^3.14.0",
+    "typescript": "^5.2.2"
+  }
+}

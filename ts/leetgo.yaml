@@ -1,0 +1,10 @@
+# This is the leetgo project level config, global config is at /home/albert/.config/leetgo/config.yaml
+# For more details, please refer to https://github.com/j178/leetgo
+language: zh
+code:
+  lang: typescript
+  typescript:
+    out_dir: ./leetcode
+leetcode:
+  site: https://leetcode.cn
+  from: cookies
