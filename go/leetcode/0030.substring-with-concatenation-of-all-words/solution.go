@@ -4,64 +4,71 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"os"
 
 	. "github.com/j178/leetgo/testutils/go"
 )
 
 // @lc code=begin
-func checkWindowContent(subString string, singleWordLength int, wordCount int, dictionary map[string]int) bool {
-	currentDictionary := make(map[string]int)
-	left, right := 0, singleWordLength-1
-	for i := 0; i < wordCount; i += 1 {
-		currentWord := subString[left : right+1]
-		currentDictionary[currentWord] += 1
-		left += singleWordLength
-		right += singleWordLength
-	}
-
-	for k := range dictionary {
-		if currentDictionary[k] != dictionary[k] {
-			return false
-		}
-	}
-
-	return true
-}
-
 func findSubstring(s string, words []string) (ans []int) {
-	dictionary := make(map[string]int)
-	singleWordLength := len(words[0])
-	WordCount := len(words)
-	windowSize := singleWordLength * WordCount
+	ls, m, n := len(s), len(words), len(words[0])
+	for i := 0; i < n && i+m*n-1 < ls; i++ {
+		differ := map[string]int{}
 
-	for _, word := range words {
-		dictionary[word] += 1
-	}
-
-	startIndex, endIndex := 0, windowSize-1
-	for endIndex < len(s) {
-		subString := s[startIndex : endIndex+1]
-		if checkWindowContent(subString, singleWordLength, WordCount, dictionary) {
-			ans = append(ans, startIndex)
+		// j : cur word index
+		for j := 0; j < m; j++ {
+			begin, end := i+j*n, i+(j+1)*n-1
+			differ[s[begin:end+1]]++
 		}
-		startIndex += 1
-		endIndex += 1
-	}
 
-	return ans
+		for _, word := range words {
+			differ[word]--
+			if differ[word] == 0 {
+				delete(differ, word)
+			}
+		}
+
+		// begin slide word
+		for start := i; start+m*n-1 < ls; start += n {
+			if start != i {
+				begin, end := start+(m-1)*n, start+m*n-1
+				word := s[begin : end+1]
+				differ[word]++
+				if differ[word] == 0 {
+					delete(differ, word)
+				}
+				word = s[start-n : start]
+				differ[word]--
+				if differ[word] == 0 {
+					delete(differ, word)
+				}
+			}
+			if len(differ) == 0 {
+				ans = append(ans, start)
+			}
+		}
+	}
+	return
 }
 
 // @lc code=end
 
 func main() {
+	file, err := os.Open("./testcases.txt")
+	if err != nil {
+		fmt.Println("Error", err)
+		return
+	}
+
+	in := bufio.NewReader(file)
+	defer file.Close()
+
 	// stdin := bufio.NewReader(os.Stdin)
-	// s := Deserialize[string](ReadLine(stdin))
-	s := "barfoothefoobarman"
-	// s = "wordgoodgoodgoodbestword"
-	// words := Deserialize[[]string](ReadLine(stdin))
-	words := []string{"foo", "bar"}
-	// words = []string{"word", "good", "best", "word"}
+	ReadLine(in)
+	s := Deserialize[string](ReadLine(in))
+	words := Deserialize[[]string](ReadLine(in))
 
 	ans := findSubstring(s, words)
 
