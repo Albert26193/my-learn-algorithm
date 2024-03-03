@@ -6,9 +6,12 @@ package main
 
 import (
 	// "bufio"
+	"bufio"
 	"fmt"
-	// "os"
+	"os"
 	"sort"
+
+	// "os"
 
 	. "github.com/j178/leetgo/testutils/go"
 )
@@ -46,55 +49,71 @@ func merge(intervals [][]int) (ans [][]int) {
 */
 
 // TODO: implement it again
-func max(a int, b int) int {
-	if a > b {
-		return a
-	} else {
-		return b
-	}
-}
-
 func merge(intervals [][]int) (ans [][]int) {
+	if len(intervals) == 0 {
+		return ans
+	}
+
 	sort.Slice(intervals, func(i, j int) bool {
 		if intervals[i][0] == intervals[j][0] {
 			return intervals[i][1] < intervals[j][1]
-		} else {
-			return intervals[i][0] < intervals[j][0]
 		}
+
+		return intervals[i][0] < intervals[j][0]
 	})
 
-	idx := -1
+	merged := make([][]int, 0)
+	for _, inter := range intervals {
+		if len(merged) == 0 {
+			merged = append(merged, inter)
+			continue
+		}
 
-	for i := 0; i < len(intervals); i++ {
-		ans = append(ans, []int{0, 0})
+		// right ==> last merged one's right boundary
+		lastMerged := merged[len(merged)-1]
+		rightPivot := lastMerged[1]
+
+		cur := inter
+		// current left < rightPivot
+		if inter[0] <= rightPivot {
+			cur = []int{lastMerged[0], maxx(inter[1], lastMerged[1])}
+			merged = merged[:len(merged)-1]
+		}
+
+		merged = append(merged, cur)
 	}
 
-	for _, interval := range intervals {
-		// if don't need to merge
-		if (idx == -1) || (interval[0] > ans[idx][1]) {
-			idx += 1
-			ans[idx] = interval
-		} else {
-			// if need to merge
-			ans[idx][1] = max(ans[idx][1], interval[1])
+	// fmt.Println(intervals)
+	return merged
+}
+
+func maxx(nums ...int) int {
+	res := nums[0]
+	for _, num := range nums {
+		if num > res {
+			res = num
 		}
 	}
 
-	return ans[:idx+1]
+	return res
 }
 
 // @lc code=end
 
 func main() {
-	// stdin := bufio.NewReader(os.Stdin)
-	// intervals := Deserialize[[][]int](ReadLine(stdin))
-
-	intervals := [][]int{
-		{1, 3},
-		{2, 6},
-		{8, 10},
-		{15, 18},
+	file, err := os.Open("./testcases.txt")
+	if err != nil {
+		fmt.Println("Error", err)
+		return
 	}
+
+	in := bufio.NewReader(file)
+	defer file.Close()
+
+	ReadLine(in)
+
+	intervals := Deserialize[[][]int](ReadLine(in))
+
 	ans := merge(intervals)
 
 	fmt.Println("\noutput:", Serialize(ans))
