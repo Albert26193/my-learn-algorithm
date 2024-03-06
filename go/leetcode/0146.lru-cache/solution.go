@@ -105,7 +105,7 @@ func main() {
 		fmt.Println("Error", err)
 		return
 	}
-	
+
 	in := bufio.NewReader(file)
 	defer file.Close()
 

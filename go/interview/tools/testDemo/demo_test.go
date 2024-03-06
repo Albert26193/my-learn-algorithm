@@ -18,13 +18,13 @@ func TestAdd(t *testing.T) {
 func TestMul(t *testing.T) {
 	t.Run("pos", func(t *testing.T) {
 		if Mul(2, 3) != 6 {
-			t.Fatal("fail")
+			t.Errorf("fail")
 		}
 	})
 
 	t.Run("neg", func(t *testing.T) {
 		if Mul(-2, -10) != 20 {
-			t.Fatal("fail")
+			t.Errorf("fail")
 		}
 	})
 
