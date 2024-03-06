@@ -29,23 +29,36 @@
       "package main\n\nimport(\n    \"fmt\"\n    \"strings\"\n)\n\nfunc main(){}"
     ]
   },
-  "go if err" :{
+  "go if err": {
     "scope": "go",
     "prefix": "zi",
     "body": "if err != nil {\n    fmt.Println(\"Error:\", err)\n    return \n}"
   },
   "go read": {
-  "scope": "go",
-  "prefix": "zr",
-  "body": [
-    "file, err := os.Open(\"./testcases.txt\")",
-    "if err != nil {",
-    "    fmt.Println(\"Error\", err)",
-    "    return",
-    "}",
-    "",
-    "in := bufio.NewReader(file)",
-    "defer file.Close()"
-  ]
-}
+    "scope": "go",
+    "prefix": "zr",
+    "body": [
+      "file, err := os.Open(\"./testcases.txt\")",
+      "if err != nil {",
+      "    fmt.Println(\"Error\", err)",
+      "    return",
+      "}",
+      "",
+      "in := bufio.NewReader(file)",
+      "defer file.Close()"
+    ]
+  },
+  "markdown tag": {
+    "scope": "all",
+    "prefix": "ztag",
+    "body": [
+      "---",
+      "tags:",
+      "   - 双指针",
+      "   - 模板题",
+      "   - 去重",
+      "   - Hot100",
+      "---",
+    ]
+  }
 }

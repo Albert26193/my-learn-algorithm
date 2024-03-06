@@ -6,8 +6,8 @@ package main
 
 import (
 	"bufio"
+	"container/heap"
 	"fmt"
-	"math/rand"
 	"os"
 
 	. "github.com/j178/leetgo/testutils/go"
@@ -15,6 +15,8 @@ import (
 
 // @lc code=begin
 
+// solution1: quick select
+/*
 func findKthLargest(nums []int, k int) (ans int) {
 	// n := len(nums)
 	return quickSelect(nums, k)
@@ -49,6 +51,49 @@ func quickSelect(nums []int, k int) int {
 
 	// k in large
 	return pivot
+}
+*/
+
+// solution2 : heap
+type hp []int
+
+// implement 5 methods for heap
+func (h *hp) Len() int {
+	return len(*h)
+}
+
+func (h *hp) Less(i, j int) bool {
+	return (*h)[i] > (*h)[j]
+}
+
+func (h *hp) Swap(i, j int) {
+	(*h)[i], (*h)[j] = (*h)[j], (*h)[i]
+}
+
+func (h *hp) Push(n any) {
+	*h = append(*h, n.(int))
+}
+
+func (h *hp) Pop() any {
+	num := (*h)[len(*h)-1]
+	*h = (*h)[:len(*h)-1]
+	return num
+}
+
+func findKthLargest(nums []int, k int) (ans int) {
+	h := &hp{}
+	heap.Init(h)
+
+	for _, num := range nums {
+		heap.Push(h, num)
+	}
+
+	for i := 0; i < k; i++ {
+		ans = heap.Pop(h).(int)
+	}
+	// fmt.Println(h[k-1])
+
+	return
 }
 
 // @lc code=end
