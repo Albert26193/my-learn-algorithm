@@ -14,52 +14,39 @@ import (
 
 // @lc code=begin
 
-// f[i][j] bool ==> [i, ..., j] is true or false
-// f[i][j] : true : f[i-1][j-1] && s[i] == s[j]
-// f[i][j] : false: otherwise
-
+// f[i][j] ==> [i, j] is Palindrome ?
+// f[i][j] = f[i+1][j-1] && s[i == s[j]
 func longestPalindrome(s string) (ans string) {
 	n := len(s)
 
-	if n < 2 {
-		return s
-	}
-
-	ans = s[0:1]
 	f := make([][]bool, n)
 	for i := 0; i < n; i++ {
 		f[i] = make([]bool, n)
 	}
 
-	// boundary
-	for i := 0; i < n; i++ {
-		f[i][i] = true
-	}
+	for length := 1; length <= n; length++ {
+		for begin := 0; begin+length-1 <= n-1; begin++ {
+			end := begin + length - 1
 
-	for len := 2; len <= n; len++ {
-		for start := 0; start+len-1 < n; start++ {
-			end := start + len - 1
-
-			if s[start] != s[end] {
-				f[start][end] = false
+			if s[begin] != s[end] {
+				f[begin][end] = false
 				continue
 			}
 
-			if len <= 3 {
-				f[start][end] = true
-				ans = s[start : end+1]
+			if length <= 3 {
+				f[begin][end] = true
+				ans = s[begin : end+1]
 				continue
 			}
 
-			f[start][end] = f[start+1][end-1]
-			if f[start][end] {
-				// fmt.Println(start, end)
-				ans = s[start : end+1]
+			f[begin][end] = f[begin+1][end-1]
+
+			if f[begin][end] {
+				ans = s[begin : end+1]
 			}
 		}
 	}
-
-	return ans
+	return
 }
 
 // @lc code=end

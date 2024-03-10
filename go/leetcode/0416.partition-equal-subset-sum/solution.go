@@ -33,14 +33,15 @@ func getSum(nums []int) int {
 func canPartition(nums []int) bool {
 	n := len(nums)
 
-	V := getSum(nums)
-	f := make([]bool, V+1)
-
-	if V%2 != 0 {
+	sum := getSum(nums)
+	if sum%2 != 0 {
 		return false
 	}
 
-	target := V / 2
+	target := sum / 2
+
+	// f[i] ==> volume is f[i], can fit it
+	f := make([]bool, target+1)
 	f[0] = true
 	for i := 0; i < n; i++ {
 		currentVolume := nums[i]
@@ -49,7 +50,7 @@ func canPartition(nums []int) bool {
 				return true
 			}
 
-			f[j] = f[j] || f[j-nums[i]]
+			f[j] = f[j] || f[j-currentVolume]
 		}
 	}
 

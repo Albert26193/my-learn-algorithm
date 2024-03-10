@@ -13,56 +13,47 @@ import (
 )
 
 // @lc code=begin
-type position struct {
-	x int
-	y int
-}
-
 func spiralOrder(matrix [][]int) []int {
-	var getLevel func(start position, end position) []int
-	getLevel = func(start position, end position) []int {
-		if start.x > end.x || start.y > end.y {
-			fmt.Println(start.x, end.x)
-			return []int{}
-		}
-
-		if start.x == end.x && start.y == end.y {
-			return []int{matrix[start.x][start.y]}
-		}
-
-		top, left, bottom, right := start.x, start.y, end.x, end.y
-		cur := make([]int, 0)
-
-		// top
-		for i := left; i <= right; i++ {
-			cur = append(cur, matrix[top][i])
-		}
-
-		// right
-		for i := top + 1; i <= bottom; i++ {
-			cur = append(cur, matrix[i][right])
-		}
-
-		// bottom
-		for i := right - 1; i >= left && top < bottom; i-- {
-			cur = append(cur, matrix[bottom][i])
-		}
-
-		// left
-		for i := bottom - 1; i > top && left < right; i-- {
-			cur = append(cur, matrix[i][left])
-		}
-
-		child := getLevel(position{top + 1, left + 1}, position{bottom - 1, right - 1})
-		cur = append(cur, child...)
-		return cur
+	if len(matrix) == 0 || len(matrix[0]) == 0 {
+		return []int{}
 	}
 
 	row, col := len(matrix), len(matrix[0])
-	p1, p2 := position{0, 0}, position{row - 1, col - 1}
-	ans := getLevel(p1, p2)
-	// fmt.Println(ans)
-	return ans
+
+	var getNumber func(left, top, right, bottom int) []int
+	getNumber = func(left, top, right, bottom int) []int {
+		if left > right || top > bottom {
+			// fmt.Println("here")
+			return []int{}
+		}
+
+		// get top
+		res := make([]int, 0)
+		for i := left; i <= right; i++ {
+			res = append(res, matrix[top][i])
+		}
+
+		// get right
+		for i := top + 1; i <= bottom; i++ {
+			res = append(res, matrix[i][right])
+		}
+
+		// get bottom
+		for i := right - 1; i >= left && top < bottom; i-- {
+			res = append(res, matrix[bottom][i])
+		}
+
+		//get left
+		for i := bottom - 1; i >= top+1 && left < right; i-- {
+			res = append(res, matrix[i][left])
+		}
+
+		res = append(res, getNumber(left+1, top+1, right-1, bottom-1)...)
+		// fmt.Println(res)
+		return res
+	}
+
+	return getNumber(0, 0, col-1, row-1)
 }
 
 // @lc code=end

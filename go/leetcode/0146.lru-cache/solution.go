@@ -6,6 +6,7 @@ package main
 
 import (
 	"bufio"
+	"container/list"
 	"fmt"
 	"os"
 
@@ -13,88 +14,48 @@ import (
 )
 
 // @lc code=begin
-type DLinkNode struct {
+type entry struct {
 	key, value int
-	prev, next *DLinkNode
 }
 
 type LRUCache struct {
-	size       int
-	capacity   int
-	cache      map[int]*DLinkNode
-	head, tail *DLinkNode
-}
-
-func initDlinkNode(key, value int) *DLinkNode {
-	return &DLinkNode{
-		key:   key,
-		value: value,
-	}
+	capacity int
+	list     *list.List // 双向链表
+	cached   map[int]*list.Element
 }
 
 func Constructor(capacity int) LRUCache {
-	l := LRUCache{
-		cache:    map[int]*DLinkNode{},
-		head:     initDlinkNode(0, 0),
-		tail:     initDlinkNode(0, 0),
+	return LRUCache{
 		capacity: capacity,
+		list:     list.New(),
+		cached:   map[int]*list.Element{},
 	}
-
-	l.head.next = l.tail
-	l.tail.prev = l.head
-	return l
 }
 
-func (l *LRUCache) Get(key int) (ans int) {
-	if _, ok := l.cache[key]; !ok {
+func (c *LRUCache) Get(key int) int {
+	if _, has := c.cached[key]; !has {
 		return -1
 	}
 
-	node := l.cache[key]
-	l.moveToHead(node)
-	return node.value
+	node := c.cached[key]
+	c.list.MoveToFront(node)
+	return node.Value.(entry).value
 }
 
-func (l *LRUCache) Put(key int, value int) {
-	if _, ok := l.cache[key]; ok {
-		node := l.cache[key]
-		node.value = value
-		l.moveToHead(node)
+func (c *LRUCache) Put(key, value int) {
+	if node, has := c.cached[key]; has {
+		node.Value = entry{
+			key:   key,
+			value: value,
+		}
+		c.list.MoveToFront(node)
 	} else {
-		node := initDlinkNode(key, value)
-		l.cache[key] = node
-		l.addToHead(node)
-		l.size++
-		if l.size > l.capacity {
-			removed := l.removeTail()
-			delete(l.cache, removed.key)
-			l.size--
+		c.cached[key] = c.list.PushFront(entry{key, value})
+
+		if len(c.cached) > c.capacity {
+			delete(c.cached, c.list.Remove(c.list.Back()).(entry).key)
 		}
 	}
-}
-
-func (l *LRUCache) moveToHead(node *DLinkNode) {
-	l.removeNode(node)
-	l.addToHead(node)
-}
-
-func (l *LRUCache) removeNode(node *DLinkNode) {
-	node.prev.next = node.next
-	node.next.prev = node.prev
-}
-
-func (l *LRUCache) addToHead(node *DLinkNode) {
-	node.prev = l.head
-	node.next = l.head.next
-
-	l.head.next.prev = node
-	l.head.next = node
-}
-
-func (l *LRUCache) removeTail() *DLinkNode {
-	node := l.tail.prev
-	l.removeNode(node)
-	return node
 }
 
 // @lc code=end
