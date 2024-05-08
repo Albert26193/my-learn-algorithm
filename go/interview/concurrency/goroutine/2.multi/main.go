@@ -13,7 +13,6 @@ func hello(i int) {
 }
 
 func main() {
-
 	for i := 0; i < 10; i++ {
 		wg.Add(1) // 启动一个goroutine就登记+1
 		go hello(i)

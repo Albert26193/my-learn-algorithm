@@ -13,6 +13,24 @@ import (
 )
 
 // @lc code=begin
+func sortList(head *ListNode) (ans *ListNode) {
+	if head == nil || head.Next == nil {
+		return head
+	}
+
+	// find middle node
+	mid := findMiddle(head)
+	midNext := mid.Next
+	mid.Next = nil
+
+	// fmt.Println(mid.Val, midNext.Val)
+	// sort
+	left := sortList(head)
+	right := sortList(midNext)
+
+	return mergeList(left, right)
+}
+
 func findMiddle(head *ListNode) (ans *ListNode) {
 	if head == nil || head.Next == nil {
 		return head
@@ -44,24 +62,6 @@ func mergeList(l1 *ListNode, l2 *ListNode) *ListNode {
 		l2.Next = mergeList(l1, l2.Next)
 		return l2
 	}
-}
-
-func sortList(head *ListNode) (ans *ListNode) {
-	if head == nil || head.Next == nil {
-		return head
-	}
-
-	// find middle node
-	mid := findMiddle(head)
-	midNext := mid.Next
-	mid.Next = nil
-
-	// fmt.Println(mid.Val, midNext.Val)
-	// sort
-	left := sortList(head)
-	right := sortList(midNext)
-
-	return mergeList(left, right)
 }
 
 // @lc code=end

@@ -17,6 +17,20 @@ import (
 // 1. find middle node
 // 2. split and reverse
 // 3. join List
+func reorderList(head *ListNode) {
+	if head == nil || head.Next == nil {
+		return
+	}
+
+	mid := findMiddleNode(head)
+	l1, l2 := head, mid.Next
+
+	mid.Next = nil
+	l2 = reverseList(l2)
+	joinList(l1, l2)
+	fmt.Println(l1.Val, l2.Val)
+}
+
 func findMiddleNode(head *ListNode) *ListNode {
 	if head == nil {
 		return nil
@@ -59,20 +73,6 @@ func joinList(ha *ListNode, hb *ListNode) {
 
 		pa, pb = tempA, tempB
 	}
-}
-
-func reorderList(head *ListNode) {
-	if head == nil || head.Next == nil {
-		return
-	}
-
-	mid := findMiddleNode(head)
-	l1, l2 := head, mid.Next
-
-	mid.Next = nil
-	l2 = reverseList(l2)
-	joinList(l1, l2)
-	fmt.Println(l1.Val, l2.Val)
 }
 
 // @lc code=end
