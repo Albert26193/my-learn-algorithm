@@ -19,20 +19,16 @@ func check(s string) bool {
 	if len(s) >= 4 {
 		return false
 	}
-	if len(s) >= 2 && s[0] == '0' {
+	if len(s) > 1 && s[0] == '0' {
 		return false
 	}
+
 	num, err := strconv.Atoi(s)
 	if err != nil {
-		fmt.Println(err)
 		return false
 	}
 
-	if num < 0 || num > 255 {
-		return false
-	}
-
-	return true
+	return 0 <= num && num <= 255
 }
 
 func getString(ss []string) string {
@@ -41,45 +37,35 @@ func getString(ss []string) string {
 		res += s
 		res += "."
 	}
-
 	return res[:len(res)-1]
 }
 
 func restoreIpAddresses(s string) (ans []string) {
-	n := len(s)
-
-	ans = make([]string, 0)
 	var dfs func(index int, cur []string)
 	dfs = func(index int, cur []string) {
-		if index == n {
-			if len(cur) == 4 {
+		if len(cur) == 4 {
+			if index == len(s) {
 				ans = append(ans, getString(cur))
 			}
-		}
-
-		if len(cur) >= 4 {
 			return
 		}
 
-		// enum length
 		for l := 1; l <= 3; l++ {
-			if l+index > n {
+			if index+l > len(s) {
 				continue
 			}
-
-			next := s[index : l+index]
-			if !check(next) {
+			str := s[index : index+l]
+			if !check(str) {
 				continue
 			}
-
-			cur = append(cur, next)
+			cur = append(cur, str)
 			dfs(index+l, cur)
 			cur = cur[:len(cur)-1]
 		}
 	}
 
 	dfs(0, []string{})
-	return
+	return ans
 }
 
 // @lc code=end
