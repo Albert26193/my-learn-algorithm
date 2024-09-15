@@ -7,10 +7,10 @@ import (
 
 func TestPreAppend(t *testing.T) {
 	testCases := []struct {
-		name   string
-		nums   []int
-		values []int
-		want   []int
+		name string
+		nums  []int
+		values  []int
+		want  []int
 	}{
 		{
 			name:   "prepend 1, 2, 3 to empty slices",
@@ -27,8 +27,8 @@ func TestPreAppend(t *testing.T) {
 	}
 
 	for _, tt := range testCases {
-		if got := prependNums(tt.nums, tt.values...); !reflect.DeepEqual(got, tt.want) {
-			t.Errorf("prepend result is %v, but got %v", got, tt.want)
+		if got := prependNums(tt.nums, tt.values...); !reflect.DeepEqual(tt.want, got) {
+			t.Errorf("we hope %v, but got %v", got, tt.want)
 		}
 	}
 }

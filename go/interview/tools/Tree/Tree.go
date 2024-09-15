@@ -10,7 +10,6 @@ type TreeNode struct {
 
 func NewTreeNode(v int) *TreeNode {
 	return &TreeNode{
-		Left:  nil,
 		Right: nil,
 		Val:   v,
 	}

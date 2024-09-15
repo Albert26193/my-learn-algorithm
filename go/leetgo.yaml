@@ -7,4 +7,5 @@ code:
     out_dir: ./leetcode
 leetcode:
   site: https://leetcode.cn
-  from: cookies
+  credentials:
+    from: cookies

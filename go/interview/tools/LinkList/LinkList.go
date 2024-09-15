@@ -3,13 +3,13 @@ package main
 import "fmt"
 
 type ListNode struct {
-	Val  int
+	Val int
 	Next *ListNode
 }
 
 func NewListNode(v int) *ListNode {
 	return &ListNode{
-		Val:  v,
+		Val: v,
 		Next: nil,
 	}
 }
