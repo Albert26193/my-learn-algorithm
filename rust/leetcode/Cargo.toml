@@ -1,26 +1,18 @@
+[package]
+edition = '2021'
+name = 'leetcode-solutions'
+version = '0.1.0'
+
 [[bin]]
 name = 'two-sum'
 path = 'src/0001.two-sum/solution.rs'
 
 [[bin]]
-name = 'add-two-numbers'
-path = 'src/0002.add-two-numbers/solution.rs'
-
-[[bin]]
 name = 'longest-substring-without-repeating-characters'
 path = 'src/0003.longest-substring-without-repeating-characters/solution.rs'
-
-[[bin]]
-name = 'median-of-two-sorted-arrays'
-path = 'src/0004.median-of-two-sorted-arrays/solution.rs'
 
 [dependencies]
 anyhow = '1.0.79'
 leetgo-rs = '0.2.1'
 serde = '1.0.196'
 serde_json = '1.0.113'
-
-[package]
-edition = '2021'
-name = 'leetcode-solutions'
-version = '0.1.0'

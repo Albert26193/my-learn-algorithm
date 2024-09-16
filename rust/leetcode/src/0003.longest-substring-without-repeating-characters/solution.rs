@@ -8,7 +8,7 @@
 #![allow(dead_code)]
 use anyhow::Result;
 use leetgo_rs::*;
-use std::{collections::HashMap};
+use std::collections::HashMap;
 use std::fs::File;
 use std::io::{self, BufRead, BufReader};
 
@@ -37,14 +37,5 @@ impl Solution {
 // @lc code=end
 
 fn main() -> Result<()> {
-	let file = File::open("./testcases.txt")?;
-	let reader = BufReader::new(file);
-	let mut lines = reader.lines();
-	let _ = lines.next();	
-	let input = lines.next().ok_or_else(|| io::Error::new(io::ErrorKind::InvalidData, "Not enough lines in file"))??;
-
-  let ans: i32 = Solution::length_of_longest_substring(s).into();
-
-  println!("\noutput: {}", serialize(ans)?);
   Ok(())
 }
