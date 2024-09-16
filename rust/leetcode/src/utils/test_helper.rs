@@ -4,19 +4,19 @@ use std::fs::File;
 use std::io::Read;
 use std::str;
 
-pub(crate) struct Tester {
+pub struct Tester {
     input: Vec<(String, Vec<u8>)>,
     output: Vec<(String, Vec<u8>)>,
 }
 
 impl Tester {
-    pub(crate) fn new(input_directory: &str, output_directory: &str) -> Tester {
+    pub fn new(input_directory: &str, output_directory: &str) -> Tester {
         let input = read_from_directory(input_directory);
         let output = read_from_directory(output_directory);
         Tester { input, output }
     }
 
-    pub(crate) fn test_solution<F>(self, solution: F)
+    pub fn test_solution<F>(self, solution: F)
     where
         F: Fn(&mut IO<&[u8], &mut Vec<u8>>),
     {
@@ -32,7 +32,7 @@ impl Tester {
             assert_eq!(writer, output);
         }
     }
-    pub(crate) fn test_solution_with<F1, F2>(self, solution: F1, assertion: F2)
+    pub fn test_solution_with<F1, F2>(self, solution: F1, assertion: F2)
     where
         F1: Fn(&mut IO<&[u8], &mut Vec<u8>>),
         F2: Fn(&mut IO<&[u8], &mut Vec<u8>>, &mut IO<&[u8], &mut Vec<u8>>),

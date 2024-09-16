@@ -1,6 +1,6 @@
 pub struct IO<R, W: std::io::Write>(R, std::io::BufWriter<W>);
 
-impl<R: std::io::Read, W: std::io::Write> IO<R, W> {
+impl<R: std::io::BufRead, W: std::io::Write> IO<R, W> {
     pub fn new(r: R, w: W) -> IO<R, W> {
         IO(r, std::io::BufWriter::new(w))
     }
@@ -31,6 +31,14 @@ impl<R: std::io::Read, W: std::io::Write> IO<R, W> {
     }
     pub fn chars(&mut self) -> Vec<char> {
         self.read::<String>().chars().collect()
+    }
+    pub fn read_line_as_vec<T: std::str::FromStr>(&mut self) -> Vec<T> {
+        // use std::io::Read;
+        let mut buf = String::new();
+        self.0.by_ref().read_line(&mut buf).unwrap();
+        buf.split_whitespace()
+            .map(|s| s.parse().ok().expect("Parse error."))
+            .collect()
     }
 }
 

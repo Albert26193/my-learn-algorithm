@@ -1,6 +1,6 @@
 [package]
 edition = '2021'
-name = 'leetcode-solutions'
+name = 'leetcode'
 version = '0.1.0'
 
 [[bin]]
