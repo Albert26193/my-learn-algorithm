@@ -1,3 +1,7 @@
+use std::io::Write;
+
+use itertools::Itertools;
+
 pub struct IO<R, W: std::io::Write>(R, std::io::BufWriter<W>);
 
 impl<R: std::io::BufRead, W: std::io::Write> IO<R, W> {
@@ -8,20 +12,25 @@ impl<R: std::io::BufRead, W: std::io::Write> IO<R, W> {
         use std::io::Write;
         self.1.write_all(s.to_string().as_bytes()).unwrap();
     }
+    pub fn write_arr<T: ToString>(&mut self, arr: &[T]) {
+        let bytes: Vec<u8> = arr
+            .iter()
+            .map(|item| item.to_string())
+            .intersperse(" ".to_string())
+            .flat_map(|s| s.into_bytes())
+            .collect();
+        self.1.write_all(&bytes).unwrap();
+    }
     pub fn read<T: std::str::FromStr>(&mut self) -> T {
         use std::io::Read;
-        let buf = self
-            .0
+        let buf = self.0
             .by_ref()
             .bytes()
             .map(|b| b.unwrap())
-            .skip_while(|&b| b == b' ' || b == b'\n' || b == b'\r' || b == b'\t')
+            .skip_while(|&b| (b == b' ' || b == b'\n' || b == b'\r' || b == b'\t'))
             .take_while(|&b| b != b' ' && b != b'\n' && b != b'\r' && b != b'\t')
             .collect::<Vec<_>>();
-        unsafe { std::str::from_utf8_unchecked(&buf) }
-            .parse()
-            .ok()
-            .expect("Parse error.")
+        (unsafe { std::str::from_utf8_unchecked(&buf) }).parse().ok().expect("Parse error.")
     }
     pub fn usize0(&mut self) -> usize {
         self.read::<usize>() - 1
@@ -48,7 +57,8 @@ mod tests {
 
     #[test]
     fn test_io() {
-        let input = br"10
+        let input =
+            br"10
         1 2 3 4 5 6 7 8 9 10
         abcde fghij
         

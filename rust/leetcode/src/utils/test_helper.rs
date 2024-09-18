@@ -1,4 +1,5 @@
 use crate::utils::scanner::IO;
+use itertools::Itertools;
 use std::fs;
 use std::fs::File;
 use std::io::Read;
@@ -16,13 +17,10 @@ impl Tester {
         Tester { input, output }
     }
 
-    pub fn test_solution<F>(self, solution: F)
-    where
-        F: Fn(&mut IO<&[u8], &mut Vec<u8>>),
-    {
-        for ((input_label, input), (output_label, output)) in
-            self.input.into_iter().zip(self.output)
-        {
+    pub fn test_solution<F>(self, solution: F) where F: Fn(&mut IO<&[u8], &mut Vec<u8>>) {
+        for ((input_label, input), (output_label, output)) in self.input
+            .into_iter()
+            .zip(self.output) {
             eprintln!("Testing {} {}", input_label, output_label);
             let mut writer = vec![];
             {
@@ -33,13 +31,13 @@ impl Tester {
         }
     }
     pub fn test_solution_with<F1, F2>(self, solution: F1, assertion: F2)
-    where
-        F1: Fn(&mut IO<&[u8], &mut Vec<u8>>),
-        F2: Fn(&mut IO<&[u8], &mut Vec<u8>>, &mut IO<&[u8], &mut Vec<u8>>),
+        where
+            F1: Fn(&mut IO<&[u8], &mut Vec<u8>>),
+            F2: Fn(&mut IO<&[u8], &mut Vec<u8>>, &mut IO<&[u8], &mut Vec<u8>>)
     {
-        for ((input_label, input), (output_label, output)) in
-            self.input.into_iter().zip(self.output)
-        {
+        for ((input_label, input), (output_label, output)) in self.input
+            .into_iter()
+            .zip(self.output) {
             eprintln!("Testing {} {}", input_label, output_label);
             let mut writer = vec![];
             {
@@ -64,7 +62,8 @@ fn read_file(filepath: &str) -> Vec<u8> {
 }
 
 fn read_from_directory(directory_path: &str) -> Vec<(String, Vec<u8>)> {
-    let mut filenames: Vec<String> = fs::read_dir(directory_path)
+    let mut filenames: Vec<String> = fs
+        ::read_dir(directory_path)
         .unwrap()
         .map(|result| result.unwrap().path().display().to_string())
         .collect();
