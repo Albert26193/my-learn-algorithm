@@ -1,5 +1,5 @@
 {
-  "github.copilot.editor.enableAutoCompletions": false,
+  // "github.copilot.editor.enableAutoCompletions": false,
   "rust-analyzer.linkedProjects": [
     "${workspaceFolder}/rust/leetcode/Cargo.toml"
   ]

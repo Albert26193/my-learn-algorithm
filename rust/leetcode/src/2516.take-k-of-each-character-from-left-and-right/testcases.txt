@@ -1,0 +1,13 @@
+input:
+"aabaaaacaabc"
+2
+[1, 2, 3, 4, 5]
+output:
+0
+
+input:
+"a"
+1
+[1, 2, 3, 4, -5, -100]
+output:
+0

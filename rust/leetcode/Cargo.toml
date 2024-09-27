@@ -1,19 +1,19 @@
-[package]
-edition = '2021'
-name = 'lc'
-version = '0.1.0'
-
 [[bin]]
 name = 'two-sum'
 path = 'src/0001.two-sum/solution.rs'
 
 [[bin]]
-name = 'longest-substring-without-repeating-characters'
-path = 'src/0003.longest-substring-without-repeating-characters/solution.rs'
+name = 'take-k-of-each-character-from-left-and-right'
+path = 'src/2516.take-k-of-each-character-from-left-and-right/solution.rs'
 
 [dependencies]
 anyhow = '1.0.79'
+itertools = '0.10'
 leetgo-rs = '0.2.1'
 serde = '1.0.196'
 serde_json = '1.0.113'
-itertools = '0.10'
+
+[package]
+edition = '2021'
+name = 'lc'
+version = '0.1.0'
