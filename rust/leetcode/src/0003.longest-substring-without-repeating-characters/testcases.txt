@@ -1,16 +1,14 @@
 input:
 "abcabcbb"
 output:
-[0,1]
+3
 
 input:
-[3,2,4]
-6
+"bbbbb"
 output:
-[1,2]
+1
 
 input:
-[3,3]
-6
+"pwwkew"
 output:
-[0,1]
+3

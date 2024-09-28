@@ -4,6 +4,7 @@ use std::path::PathBuf;
 use anyhow::{ Context, Result };
 // use leetgo_rs::deserialize;
 use serde::Serialize;
+use serde_json::Value;
 use serde_json;
 
 pub struct TestCase {
@@ -93,29 +94,6 @@ pub fn get_testcases(problem_number: &str) -> Result<Vec<TestCase>> {
     read_testcases(&problem_paths.testcase_file)
 }
 
-use serde_json::Value;
-
-// pub fn run_testcases<F>(problem_number: &str, solve_func: F) -> Result<(), Box<dyn Error>>
-//     where F: Fn(&[Value]) -> Value
-// {
-//     let testcases = get_testcases(problem_number)?;
-
-//     for (index, testcase) in testcases.iter().enumerate() {
-//         println!("测试用例 {}:", index + 1);
-
-//         let result = solve_func(&testcase.input);
-
-//         println!("输入: {:?}", testcase.input);
-//         println!("结果: {:?}", result);
-//         println!("预期输出: {:?}", testcase.output);
-
-//         assert_eq!(result, testcase.output);
-//         println!();
-//     }
-
-//     Ok(())
-// }
-
 pub trait IntoValue {
     fn into_value(self) -> Value;
 }
@@ -126,7 +104,6 @@ impl<T: Serialize> IntoValue for T {
     }
 }
 
-// 在 lc_input 模块中
 pub fn run_testcases<T>(problem_number: &str, solve: impl Fn(&[Value]) -> T) where T: IntoValue {
     let testcases = get_testcases(problem_number).unwrap();
     for (i, case) in testcases.iter().enumerate() {

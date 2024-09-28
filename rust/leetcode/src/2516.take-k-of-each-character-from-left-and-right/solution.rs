@@ -1,9 +1,9 @@
+#![allow(unused_imports)]
+#![allow(dead_code)]
+
 // Created by Bob at 2024/09/27 18:40
 // leetgo: dev
 // https://leetcode.cn/problems/take-k-of-each-character-from-left-and-right/
-
-// use std::{ fs::File, io::{ BufRead, BufReader }, path::PathBuf };
-//
 
 use anyhow::Result;
 use serde_json::Value;
@@ -33,7 +33,7 @@ fn solve(input: &[Value]) -> Value {
     Value::Number(serde_json::Number::from(result))
 }
 
-#[cfg(test)]
+#[allow(dead_code)]
 mod tests {
     use super::*;
     #[test]

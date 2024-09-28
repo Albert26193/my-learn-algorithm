@@ -5,6 +5,33 @@ code:
   lang: rust
   rust:
     out_dir: ./leetcode
+    blocks:
+    - name: header
+      template: |
+        #![allow(unused_imports)]
+        #![allow(dead_code)]
+        use lc::utils::lc_input::run_testcases;
+        use serde_json::Value;
+
+    - name: afterMarker
+      template: |
+      
+        fn solve(input: &[Value]) -> Vec<i32> {
+            let nums: Vec<i32> = deserialize(&input[0].to_string()).unwrap();
+            let target = input[1].as_i64().unwrap() as i32;
+            Solution::two_sum(nums, target)
+        }
+
+        #[cfg(test)]
+        mod tests {
+            use super::*;
+            #[test]
+            fn test_solution() {
+                run_testcases("0001", solve)
+            }
+        }
+
+
 leetcode:
   site: https://leetcode.cn
   credentials:

@@ -1,11 +1,13 @@
 // Created by Bob at 2024/09/28 00:12
 // leetgo: dev
 // https://leetcode.cn/problems/two-sum/
+#![allow(unused_imports)]
+#![allow(dead_code)]
+use lc::utils::lc_input::run_testcases;
 
 use anyhow::Result;
 use serde_json::Value;
 use leetgo_rs::*;
-use lc::utils::lc_input::run_testcases;
 struct Solution;
 
 // @lc code=begin
@@ -41,6 +43,7 @@ fn solve(input: &[Value]) -> Vec<i32> {
     Solution::two_sum(nums, target)
 }
 
+#[cfg(test)]
 mod tests {
     use super::*;
     #[test]
